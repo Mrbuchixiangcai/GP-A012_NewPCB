@@ -12,23 +12,23 @@ void Delay_1us(u8 t_data)
 
 void IIC_Init1(void)  
 {
-	SDA5_OUT(); __NOP(); __NOP(); __NOP(); __NOP();
-	SDA6_OUT();__NOP(); __NOP(); __NOP(); __NOP();
-	SDA7_OUT();__NOP(); __NOP(); __NOP(); __NOP();
-	SDA8_OUT();__NOP(); __NOP(); __NOP(); __NOP();
-	SDA9_OUT();__NOP(); __NOP(); __NOP(); __NOP();
-	SDA10_OUT();__NOP(); __NOP(); __NOP(); __NOP();
-	SDA11_OUT();__NOP(); __NOP(); __NOP(); __NOP();
-	SDA12_OUT();__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA5(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA6(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA7(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA8(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA9(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA10(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA11(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA12(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SCL(1);__NOP(); __NOP(); __NOP(); __NOP();
+	SDA5_OUT();  
+	SDA6_OUT(); 
+	SDA7_OUT(); 
+	SDA8_OUT(); 
+	SDA9_OUT(); 
+	SDA10_OUT(); 
+	SDA11_OUT(); 
+	SDA12_OUT(); 
+	IIC_SDA5(1); 
+	IIC_SDA6(1); 
+	IIC_SDA7(1); 
+	IIC_SDA8(1); 
+	IIC_SDA9(1); 
+	IIC_SDA10(1); 
+	IIC_SDA11(1); 
+	IIC_SDA12(1); 
+	IIC_SCL(1); 
 }
 
 void IIC_Start1(void) 
@@ -38,44 +38,44 @@ void IIC_Start1(void)
 //	IIC_SDA7(1);
 //	IIC_SCL(1);
 //	Delay_1us(0);
-	IIC_SDA5(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA6(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA7(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA8(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA9(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA10(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA11(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA12(0);__NOP(); __NOP(); __NOP(); __NOP();
+	IIC_SDA5(0); 
+	IIC_SDA6(0); 
+	IIC_SDA7(0); 
+	IIC_SDA8(0); 
+	IIC_SDA9(0); 
+	IIC_SDA10(0); 
+	IIC_SDA11(0); 
+	IIC_SDA12(0); 
 	Delay_1us(0);
-	IIC_SCL(0);__NOP(); __NOP(); __NOP(); __NOP();
+	IIC_SCL(0); 
 }
 void IIC_Stop1(void) 
 {
-	IIC_SDA5(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA6(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA7(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA8(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA9(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA10(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA11(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA12(0);__NOP(); __NOP(); __NOP(); __NOP();
-	Delay_1us(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SCL(1);__NOP(); __NOP(); __NOP(); __NOP();
-	Delay_1us(0);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA5(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA6(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA7(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA8(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA9(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA10(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA11(1);__NOP(); __NOP(); __NOP(); __NOP();
-	IIC_SDA12(1);__NOP(); __NOP(); __NOP(); __NOP();
+	IIC_SDA5(0); 
+	IIC_SDA6(0); 
+	IIC_SDA7(0); 
+	IIC_SDA8(0); 
+	IIC_SDA9(0); 
+	IIC_SDA10(0); 
+	IIC_SDA11(0); 
+	IIC_SDA12(0); 
+	Delay_1us(0); 
+	IIC_SCL(1); 
+	Delay_1us(0); 
+	IIC_SDA5(1); 
+	IIC_SDA6(1); 
+	IIC_SDA7(1); 
+	IIC_SDA8(1); 
+	IIC_SDA9(1); 
+	IIC_SDA10(1); 
+	IIC_SDA11(1); 
+	IIC_SDA12(1); 
 }
 u8 IIC_Wait_Ack(void)
 {
-	IIC_SCL(1);__NOP(); __NOP(); __NOP(); __NOP();
-	Delay_1us(0);__NOP(); __NOP(); __NOP(); __NOP(); 
-	IIC_SCL(0);__NOP(); __NOP(); __NOP(); __NOP();
+	IIC_SCL(1); 
+	Delay_1us(0);  
+	IIC_SCL(0); 
 	return 0;
 }
 
@@ -112,32 +112,32 @@ void IIC_Send_Byte_Mix(u8 p)
 {
 	for(uint8_t t=0;t<8;t++)
 	{
-		if(SN3236_Pwm1_1[p-1] & 0x80)
-    	{IIC_SDA5(1);}
-		else {IIC_SDA5(0);}
-		if(SN3236_Pwm1_2[p-1] & 0x80)
-     	{IIC_SDA6(1);}
-		else {IIC_SDA6(0);}
+//		if(SN3236_Pwm1_1[p-1] & 0x80)
+//    	{IIC_SDA5(1);}
+//		else {IIC_SDA5(0);}
+//		if(SN3236_Pwm1_2[p-1] & 0x80)
+//     	{IIC_SDA6(1);}
+//		else {IIC_SDA6(0);}
 		if(SN3236_Pwm2_1[p-1] & 0x80)
-     	{IIC_SDA7(1);}
-		else {IIC_SDA7(0);}
+     	{IIC_SDA7(1);IIC_SDA5(1);}
+		else {IIC_SDA7(0);IIC_SDA5(0);}
 		if(SN3236_Pwm2_2[p-1] & 0x80)
-    	{IIC_SDA8(1);}
-		else {IIC_SDA8(0);}
-		if(SN3236_Pwm3_1[p-1] & 0x80)
-     	{IIC_SDA9(1);}
-		else {IIC_SDA9(0);}
-		if(SN3236_Pwm3_2[p-1] & 0x80)
-     	{IIC_SDA10(1);}
-		else {IIC_SDA10(0);}
-		if(SN3236_Pwm4_1[p-1] & 0x80)
-    	{IIC_SDA11(1);}
-		else {IIC_SDA11(0);}
-		if(SN3236_Pwm4_2[p-1] & 0x80)
-     	{IIC_SDA12(1);}
-		else {IIC_SDA12(0);}
-		Delay_1us(0);__NOP(); __NOP(); __NOP(); __NOP();
-		IIC_SCL(1);__NOP(); __NOP(); __NOP(); __NOP();
+    	{IIC_SDA8(1);IIC_SDA6(1);}
+		else {IIC_SDA8(0);IIC_SDA6(0);}
+//		if(SN3236_Pwm3_1[p-1] & 0x80)
+//     	{IIC_SDA9(1);}
+//		else {IIC_SDA9(0);}
+//		if(SN3236_Pwm3_2[p-1] & 0x80)
+//     	{IIC_SDA10(1);}
+//		else {IIC_SDA10(0);}
+//		if(SN3236_Pwm4_1[p-1] & 0x80)
+//    	{IIC_SDA11(1);}
+//		else {IIC_SDA11(0);}
+//		if(SN3236_Pwm4_2[p-1] & 0x80)
+//     	{IIC_SDA12(1);}
+//		else {IIC_SDA12(0);}
+		Delay_1us(0); 
+		IIC_SCL(1); 
 		SN3236_Pwm1_1[p-1] <<= 1;
 		SN3236_Pwm1_2[p-1] <<= 1;
 		SN3236_Pwm2_1[p-1] <<= 1;
@@ -146,7 +146,7 @@ void IIC_Send_Byte_Mix(u8 p)
 		SN3236_Pwm3_2[p-1] <<= 1;
 		SN3236_Pwm4_1[p-1] <<= 1;
 		SN3236_Pwm4_2[p-1] <<= 1;
-		IIC_SCL(0);__NOP(); __NOP(); __NOP(); __NOP();
+		IIC_SCL(0); 
 	}
 }
 
