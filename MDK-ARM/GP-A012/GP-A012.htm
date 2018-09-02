@@ -3,7 +3,7 @@
 <title>Static Call Graph - [GP-A012\GP-A012.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image GP-A012\GP-A012.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Sep 02 11:58:56 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Sep 02 16:46:47 2018
 <BR><P>
 <H3>Maximum Stack Usage =        180 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -153,8 +153,8 @@ Global Symbols
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SetConfig
 <LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_ConfigChannel
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_Enable
-<LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_CalcBaseAndBitshift
-<LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
+<LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_CalcBaseAndBitshift
+<LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
 <LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_InitTick
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
 </UL>
@@ -171,7 +171,7 @@ Global Symbols
 <P><STRONG><a name="[28]"></a>__aeabi_memclr</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, memseta.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
-<BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
+<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
 </UL>
 
 <P><STRONG><a name="[90]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
@@ -190,65 +190,72 @@ Global Symbols
 
 <P><STRONG><a name="[92]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
 
-<P><STRONG><a name="[34]"></a>ADC_GetBuffer</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, app_main.o(i.ADC_GetBuffer))
-<BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = ADC_GetBuffer &rArr; HAL_ADC_Start_DMA &rArr; ADC_Enable &rArr; __aeabi_uidivmod
+<P><STRONG><a name="[37]"></a>ADAverageValue</STRONG> (Thumb, 42 bytes, Stack size 12 bytes, rgb.o(i.ADAverageValue))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = ADAverageValue
+</UL>
+<BR>[Called By]<UL><LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_GetBuffer
+</UL>
+
+<P><STRONG><a name="[34]"></a>ADC_GetBuffer</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, app_main.o(i.ADC_GetBuffer))
+<BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = ADC_GetBuffer &rArr; HAL_ADC_Start_DMA &rArr; ADC_Enable &rArr; __aeabi_uidivmod
 </UL>
 <BR>[Calls]<UL><LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Stop_DMA
-<LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_DMA
+<LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_DMA
 <LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_Error_Handler
+<LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADAverageValue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_main
 </UL>
 
-<P><STRONG><a name="[41]"></a>Array_CampFire</STRONG> (Thumb, 2172 bytes, Stack size 20 bytes, rgb.o(i.Array_CampFire))
+<P><STRONG><a name="[42]"></a>Array_CampFire</STRONG> (Thumb, 2172 bytes, Stack size 20 bytes, rgb.o(i.Array_CampFire))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = Array_CampFire
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
+<BR>[Called By]<UL><LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
 </UL>
 
-<P><STRONG><a name="[42]"></a>Array_CampFire2</STRONG> (Thumb, 1388 bytes, Stack size 20 bytes, rgb.o(i.Array_CampFire2))
+<P><STRONG><a name="[43]"></a>Array_CampFire2</STRONG> (Thumb, 1388 bytes, Stack size 20 bytes, rgb.o(i.Array_CampFire2))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = Array_CampFire2
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
+<BR>[Called By]<UL><LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
 </UL>
 
-<P><STRONG><a name="[44]"></a>Array_CampFire3</STRONG> (Thumb, 370 bytes, Stack size 16 bytes, rgb.o(i.Array_CampFire3))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = Array_CampFire3
+<P><STRONG><a name="[44]"></a>Array_CampFire3</STRONG> (Thumb, 208 bytes, Stack size 8 bytes, rgb.o(i.Array_CampFire3))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Array_CampFire3
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
+<BR>[Called By]<UL><LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
 </UL>
 
-<P><STRONG><a name="[38]"></a>BlueMode_Handle</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, bt_mode.o(i.BlueMode_Handle))
+<P><STRONG><a name="[39]"></a>BlueMode_Handle</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, bt_mode.o(i.BlueMode_Handle))
 <BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = BlueMode_Handle &rArr; BlueMode_Receive &rArr; HAL_UART_Receive_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
+<BR>[Calls]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
 </UL>
 <BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_main
 </UL>
 
-<P><STRONG><a name="[39]"></a>BlueMode_Receive</STRONG> (Thumb, 190 bytes, Stack size 16 bytes, bt_mode.o(i.BlueMode_Receive))
+<P><STRONG><a name="[3a]"></a>BlueMode_Receive</STRONG> (Thumb, 190 bytes, Stack size 16 bytes, bt_mode.o(i.BlueMode_Receive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = BlueMode_Receive &rArr; HAL_UART_Receive_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
-<LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
+<BR>[Calls]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
+<LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
 <LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_Error_Handler
-<LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 <LI><a href="#[28]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Handle
+<BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Handle
 </UL>
 
 <P><STRONG><a name="[d]"></a>DMA1_Channel1_IRQHandler</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, stm32f0xx_it.o(i.DMA1_Channel1_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = DMA1_Channel1_IRQHandler &rArr; HAL_DMA_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_IRQHandler
+<BR>[Calls]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f030x6.o(RESET)
 </UL>
 <P><STRONG><a name="[e]"></a>DMA1_Channel2_3_IRQHandler</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, stm32f0xx_it.o(i.DMA1_Channel2_3_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = DMA1_Channel2_3_IRQHandler &rArr; HAL_DMA_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_IRQHandler
+<BR>[Calls]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_IRQHandler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f030x6.o(RESET)
 </UL>
@@ -260,15 +267,14 @@ Global Symbols
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Byte1
 </UL>
 
-<P><STRONG><a name="[3f]"></a>FireMode_Handle</STRONG> (Thumb, 274 bytes, Stack size 24 bytes, rgb.o(i.FireMode_Handle))
+<P><STRONG><a name="[40]"></a>FireMode_Handle</STRONG> (Thumb, 326 bytes, Stack size 24 bytes, rgb.o(i.FireMode_Handle))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = FireMode_Handle &rArr; Array_CampFire2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SN3236_Init1
+<BR>[Calls]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SN3236_Init1
 <LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Mapping_Arrary
 <LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Array_CampFire3
-<LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Array_CampFire2
-<LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Array_CampFire
-<LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetVoltageValue
+<LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Array_CampFire2
+<LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Array_CampFire
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_main
@@ -277,13 +283,9 @@ Global Symbols
 <P><STRONG><a name="[46]"></a>GetKeyValue</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, key.o(i.GetKeyValue))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = GetKeyValue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<BR>[Calls]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyScan
-</UL>
-
-<P><STRONG><a name="[43]"></a>GetVoltageValue</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, key.o(i.GetVoltageValue))
-<BR><BR>[Called By]<UL><LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
 </UL>
 
 <P><STRONG><a name="[47]"></a>HAL_ADC_ConfigChannel</STRONG> (Thumb, 254 bytes, Stack size 24 bytes, stm32f0xx_hal_adc.o(i.HAL_ADC_ConfigChannel))
@@ -324,7 +326,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Init
 </UL>
 
-<P><STRONG><a name="[37]"></a>HAL_ADC_Start_DMA</STRONG> (Thumb, 144 bytes, Stack size 32 bytes, stm32f0xx_hal_adc.o(i.HAL_ADC_Start_DMA))
+<P><STRONG><a name="[38]"></a>HAL_ADC_Start_DMA</STRONG> (Thumb, 144 bytes, Stack size 32 bytes, stm32f0xx_hal_adc.o(i.HAL_ADC_Start_DMA))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = HAL_ADC_Start_DMA &rArr; ADC_Enable &rArr; __aeabi_uidivmod
 </UL>
 <BR>[Calls]<UL><LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_Enable
@@ -345,7 +347,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[4d]"></a>HAL_DMA_Abort</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, stm32f0xx_hal_dma.o(i.HAL_DMA_Abort))
-<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
+<BR><BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
 <LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Stop_DMA
 </UL>
 
@@ -355,7 +357,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
 </UL>
 
-<P><STRONG><a name="[3d]"></a>HAL_DMA_IRQHandler</STRONG> (Thumb, 156 bytes, Stack size 16 bytes, stm32f0xx_hal_dma.o(i.HAL_DMA_IRQHandler))
+<P><STRONG><a name="[3e]"></a>HAL_DMA_IRQHandler</STRONG> (Thumb, 156 bytes, Stack size 16 bytes, stm32f0xx_hal_dma.o(i.HAL_DMA_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = HAL_DMA_IRQHandler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel2_3_IRQHandler
@@ -365,7 +367,7 @@ Global Symbols
 <P><STRONG><a name="[4b]"></a>HAL_DMA_Init</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, stm32f0xx_hal_dma.o(i.HAL_DMA_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = HAL_DMA_Init &rArr; DMA_CalcBaseAndBitshift &rArr; __aeabi_uidivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_CalcBaseAndBitshift
+<BR>[Calls]<UL><LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_CalcBaseAndBitshift
 </UL>
 <BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_MspInit
 <LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_MspInit
@@ -377,8 +379,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_SetConfig
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_DMA
-<LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
-<LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_DMA
+<LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
+<LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_DMA
 </UL>
 
 <P><STRONG><a name="[4a]"></a>HAL_GPIO_Init</STRONG> (Thumb, 302 bytes, Stack size 24 bytes, stm32f0xx_hal_gpio.o(i.HAL_GPIO_Init))
@@ -389,9 +391,9 @@ Global Symbols
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
 </UL>
 
-<P><STRONG><a name="[3c]"></a>HAL_GPIO_ReadPin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f0xx_hal_gpio.o(i.HAL_GPIO_ReadPin))
+<P><STRONG><a name="[3d]"></a>HAL_GPIO_ReadPin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f0xx_hal_gpio.o(i.HAL_GPIO_ReadPin))
 <BR><BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetKeyValue
-<LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
+<LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_main
 </UL>
 
@@ -528,7 +530,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
 </UL>
 
-<P><STRONG><a name="[3a]"></a>HAL_UART_DMAStop</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, stm32f0xx_hal_uart.o(i.HAL_UART_DMAStop))
+<P><STRONG><a name="[3b]"></a>HAL_UART_DMAStop</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, stm32f0xx_hal_uart.o(i.HAL_UART_DMAStop))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = HAL_UART_DMAStop
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndTxTransfer
@@ -536,7 +538,7 @@ Global Symbols
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
 </UL>
 <BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart1SendData_DMA
-<LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
+<LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
 </UL>
 
 <P><STRONG><a name="[61]"></a>HAL_UART_ErrorCallback</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f0xx_hal_uart.o(i.HAL_UART_ErrorCallback))
@@ -581,12 +583,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 </UL>
 
-<P><STRONG><a name="[3b]"></a>HAL_UART_Receive_DMA</STRONG> (Thumb, 150 bytes, Stack size 24 bytes, stm32f0xx_hal_uart.o(i.HAL_UART_Receive_DMA))
+<P><STRONG><a name="[3c]"></a>HAL_UART_Receive_DMA</STRONG> (Thumb, 150 bytes, Stack size 24 bytes, stm32f0xx_hal_uart.o(i.HAL_UART_Receive_DMA))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = HAL_UART_Receive_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
-<BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
+<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_USART1_UART_Init
 </UL>
 
@@ -626,7 +628,7 @@ Global Symbols
 <P><STRONG><a name="[7d]"></a>IIC_Init1</STRONG> (Thumb, 188 bytes, Stack size 8 bytes, io_iic.o(i.IIC_Init1))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = IIC_Init1
 </UL>
-<BR>[Called By]<UL><LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SN3236_Init1
+<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SN3236_Init1
 </UL>
 
 <P><STRONG><a name="[6b]"></a>IIC_Send_Byte1</STRONG> (Thumb, 108 bytes, Stack size 20 bytes, io_iic.o(i.IIC_Send_Byte1))
@@ -693,7 +695,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[45]"></a>Mapping_Arrary</STRONG> (Thumb, 248 bytes, Stack size 0 bytes, rgb.o(i.Mapping_Arrary))
-<BR><BR>[Called By]<UL><LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
+<BR><BR>[Called By]<UL><LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
 </UL>
 
 <P><STRONG><a name="[1]"></a>NMI_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f0xx_it.o(i.NMI_Handler))
@@ -702,7 +704,7 @@ Global Symbols
 <P><STRONG><a name="[4]"></a>PendSV_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f0xx_it.o(i.PendSV_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f030x6.o(RESET)
 </UL>
-<P><STRONG><a name="[79]"></a>PowerON_Reset</STRONG> (Thumb, 178 bytes, Stack size 8 bytes, app_main.o(i.PowerON_Reset))
+<P><STRONG><a name="[79]"></a>PowerON_Reset</STRONG> (Thumb, 196 bytes, Stack size 8 bytes, app_main.o(i.PowerON_Reset))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PowerON_Reset
 </UL>
 <BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
@@ -726,12 +728,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGBMode_Handle
 </UL>
 
-<P><STRONG><a name="[40]"></a>SN3236_Init1</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, sn3236.o(i.SN3236_Init1))
+<P><STRONG><a name="[41]"></a>SN3236_Init1</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, sn3236.o(i.SN3236_Init1))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = SN3236_Init1 &rArr; IIC_Init1
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Init1
 </UL>
-<BR>[Called By]<UL><LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
+<BR>[Called By]<UL><LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
 </UL>
 
 <P><STRONG><a name="[7c]"></a>SN3236_RegWrite</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, sn3236.o(i.SN3236_RegWrite))
@@ -826,7 +828,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = Usart1SendData_DMA &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_DMA
-<LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
+<LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
 </UL>
 <BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyComMsg
 </UL>
@@ -834,7 +836,7 @@ Global Symbols
 <P><STRONG><a name="[36]"></a>_Error_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, main.o(i._Error_Handler))
 <BR><BR>[Calls]<UL><LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_Error_Handler
 </UL>
-<BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
+<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Receive
 <LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_Error_Handler
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_GetBuffer
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_MspInit
@@ -853,11 +855,11 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGBMode_Handle
 <LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyScan
 <LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KeyComMsg
-<LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
-<LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Handle
+<LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FireMode_Handle
+<LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BlueMode_Handle
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PowerON_Reset
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_GetBuffer
-<LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -879,7 +881,7 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[3e]"></a>DMA_CalcBaseAndBitshift</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, stm32f0xx_hal_dma.o(i.DMA_CalcBaseAndBitshift))
+<P><STRONG><a name="[3f]"></a>DMA_CalcBaseAndBitshift</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, stm32f0xx_hal_dma.o(i.DMA_CalcBaseAndBitshift))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = DMA_CalcBaseAndBitshift &rArr; __aeabi_uidivmod
 </UL>
 <BR>[Calls]<UL><LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
@@ -936,7 +938,7 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
 </UL>
-<BR>[Called By]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_DMA
+<BR>[Called By]<UL><LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_DMA
 </UL>
 
 <P><STRONG><a name="[20]"></a>UART_DMAAbortOnError</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, stm32f0xx_hal_uart.o(i.UART_DMAAbortOnError))
@@ -986,12 +988,12 @@ Local Symbols
 </UL>
 <P><STRONG><a name="[5d]"></a>UART_EndRxTransfer</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, stm32f0xx_hal_uart.o(i.UART_EndRxTransfer))
 <BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
-<LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
+<LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
 <LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMAError
 </UL>
 
 <P><STRONG><a name="[5c]"></a>UART_EndTxTransfer</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f0xx_hal_uart.o(i.UART_EndTxTransfer))
-<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
+<BR><BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
 <LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMAError
 </UL>
 
@@ -1003,7 +1005,7 @@ Local Symbols
 <P><STRONG><a name="[75]"></a>MX_ADC_Init</STRONG> (Thumb, 100 bytes, Stack size 24 bytes, main.o(i.MX_ADC_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = MX_ADC_Init &rArr; HAL_ADC_Init &rArr; HAL_ADC_MspInit &rArr; HAL_DMA_Init &rArr; DMA_CalcBaseAndBitshift &rArr; __aeabi_uidivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_DMA
+<BR>[Calls]<UL><LI><a href="#[38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_DMA
 <LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Init
 <LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_ConfigChannel
 </UL>
@@ -1022,7 +1024,7 @@ Local Symbols
 <P><STRONG><a name="[78]"></a>MX_USART1_UART_Init</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, main.o(i.MX_USART1_UART_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 108<LI>Call Chain = MX_USART1_UART_Init &rArr; HAL_UART_Init &rArr; HAL_UART_MspInit &rArr; HAL_DMA_Init &rArr; DMA_CalcBaseAndBitshift &rArr; __aeabi_uidivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
+<BR>[Calls]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main

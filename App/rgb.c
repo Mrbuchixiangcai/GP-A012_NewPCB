@@ -16,9 +16,11 @@ LED_CAMPFIRE_TypeDef campFire1;
 LED_CAMPFIRE_TypeDef campFire2;
 
 //变量定义variable definition//
-uint8_t RGB_Work;
-uint8_t step;
-uint8_t num_Delay;
+uint8_t  RGB_Work;
+uint8_t  step;
+uint8_t  num_Delay;
+uint8_t  num_Delay2;//灯光切换到地下一圈亮时延时1s
+uint8_t  num_Delay3;//脉动火焰灯光在切换到下一帧时延迟时间
 
 
 /*******************************************************************
@@ -763,6 +765,31 @@ const uint8_t campFire2_tab39[2][36] =
 29,30,15,16, 1, 2, &  1, 2,15,16,29,30,
 */
 //大火结束
+
+
+/*******************************************************************
+代码功能：脉动模式时没有音乐输入就上下跳动，看起来是一个行走的圆
+*******************************************************************/
+//上下跳动
+const uint8_t campFire3_tab1[2][36] =
+{
+//   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+	000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
+	000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
+};
+const uint8_t campFire3_tab2[2][36] =
+{
+//   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+	200,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
+	000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,000,000,000,000,000,000,000,
+};
+const uint8_t campFire3_tab3[2][36] =
+{
+//   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+	000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,000,000,000,000,000,000,
+	200,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
+};
+
 /*			左			  右
 	  27,28,13,14, & 13,14,27,28
 	  25,26,11,12, & 11,12,25,26,
@@ -775,6 +802,9 @@ const uint8_t campFire2_tab39[2][36] =
 
 
 //标志位定义flags definetion//
+uint8_t  Flag_LEDSwitchover=1;//在亮一圈和整个图像切换，脉动模式,赋值为1是认为采集电压不为0
+uint8_t  Flag_ADAverageZero;//
+uint8_t  Flag_LEDLowest;//灯光在闪动模式没有音乐时灯光亮度渐弱使用变量
 
 //函数声明Function declaration//
 void Mapping_Arrary(void);
@@ -805,86 +835,96 @@ void led_color_campFire(void)
 输出参数：
 函数功能：
 *******************************************************************/
-void Array_CampFire3(uint8_t volValue)
+void Array_CampFire3(void)
 {
-	if (volValue == 0)
+	//uint8_t temp_FireSpeed_Flashing;
+	////temp_FireSpeed_Flashing=DivideValue();
+	////GetVoltageValue_bk=temp_FireSpeed_Flashing;
+	//temp_FireSpeed_Flashing = Audio_Level_Deal();
+	//if (temp_FireSpeed_Flashing == 0)
+	//{
+	//}
+	//else if (temp_FireSpeed_Flashing == 1)
+	//	ADCVolValue = 0;
+	////fireSpeed_Flashing=25;
+	//else if (temp_FireSpeed_Flashing == 2)
+	//	fireSpeed_Flashing = 20;
+	//else if (temp_FireSpeed_Flashing == 3)
+	//	fireSpeed_Flashing = 15;
+	//else if (temp_FireSpeed_Flashing == 4)
+	//	fireSpeed_Flashing = 10;
+	//else if (temp_FireSpeed_Flashing == 5)
+	//	fireSpeed_Flashing = 5;
+
+
+	//	fireSpeed_Flashing=temp_FireSpeed_Flashing+10;//(11-temp_FireSpeed_Flashing);
+	//因为返回的是变化越大，DivideValue()返回的越大，速度越慢，要越小速度才快，所以"10-",
+	//但因为0-10变化太快，其他连个模式都是15或者22，所以又加10
+	if (Flag_ADAverageZero == 0)
 	{
-		for (uint8_t j = 0; j < 36; j++)
+		num_Delay2++;
+		if (num_Delay2 >= 100)
 		{
-			data1[PWM1][j] = 0;
-			data1[PWM2][j] = 0;
+			num_Delay2 = 100;
+			Flag_LEDSwitchover = 0;//为0就是在最底层一圈跑
 		}
+		else
+			Flag_LEDSwitchover = 1;
 	}
-	if (volValue == 1)
+	else
 	{
-		for (uint8_t j = 0; j < 36; j++)
+		num_Delay2 = 0;
+		Flag_LEDSwitchover = 1;
+	}
+
+	if (Flag_LEDSwitchover == 0)
+	{
+		num_Delay3 = 0;
+		num_Delay++;
+		if (num_Delay == 39)//上下跳动
 		{
-			data1[PWM1][j] = campFire1_tab2[PWM1][j];
-			data1[PWM2][j] = campFire2_tab2[PWM2][j];
+			for (uint8_t j = 0; j < 36; j++)
+			{
+				data1[PWM1][j] = campFire3_tab1[PWM1][j];
+				data1[PWM2][j] = campFire3_tab1[PWM2][j];
+			}
 		}
-	}
-	if (volValue == 2)
-	{
-		for (uint8_t j = 0; j < 36; j++)
+		else if (num_Delay == 78)
 		{
-			data1[PWM1][j] = campFire2_tab4[PWM1][j];
-			data1[PWM2][j] = campFire1_tab4[PWM2][j];
+			for (uint8_t j = 0; j < 36; j++)
+			{
+				data1[PWM1][j] = campFire3_tab2[PWM1][j];
+				data1[PWM2][j] = campFire3_tab2[PWM2][j];;
+			}
 		}
-	}
-	if (volValue == 3)
-	{
-		for (uint8_t j = 0; j < 36; j++)
+		else if (num_Delay >= 117)
 		{
-			data1[PWM1][j] = campFire1_tab6[PWM1][j];
-			data1[PWM2][j] = campFire2_tab6[PWM2][j];
+			num_Delay = 0;
+			for (uint8_t j = 0; j < 36; j++)
+			{
+				data1[PWM1][j] = campFire3_tab3[PWM1][j];
+				data1[PWM2][j] = campFire3_tab3[PWM2][j];;
+			}
 		}
+
 	}
-	if (volValue == 4)
+	else
 	{
-		for (uint8_t j = 0; j < 36; j++)
+		num_Delay = 0;
+		num_Delay3++;
+		if (num_Delay3 > 5)
 		{
-			data1[PWM1][j] = campFire2_tab8[PWM1][j];
-			data1[PWM2][j] = campFire1_tab8[PWM2][j];
-		}
-	}
-	if (volValue == 5)
-	{
-		for (uint8_t j = 0; j < 36; j++)
-		{
-			data1[PWM1][j] = campFire1_tab10[PWM1][j];
-			data1[PWM2][j] = campFire2_tab10[PWM2][j];
-		}
-	}
-	if (volValue == 6)
-	{
-		for (uint8_t j = 0; j < 36; j++)
-		{
-			data1[PWM1][j] = campFire2_tab12[PWM1][j];
-			data1[PWM2][j] = campFire1_tab12[PWM2][j];
-		}
-	}
-	if (volValue == 7)
-	{
-		for (uint8_t j = 0; j < 36; j++)
-		{
-			data1[PWM1][j] = campFire1_tab14[PWM1][j];
-			data1[PWM2][j] = campFire2_tab14[PWM2][j];
-		}
-	}
-	if (volValue == 8)
-	{
-		for (uint8_t j = 0; j < 36; j++)
-		{
-			data1[PWM1][j] = campFire2_tab16[PWM1][j];
-			data1[PWM2][j] = campFire1_tab16[PWM2][j];
-		}
-	}
-	if (volValue == 9)
-	{
-		for (uint8_t j = 0; j < 36; j++)
-		{
-			data1[PWM1][j] = campFire1_tab18[PWM1][j];
-			data1[PWM2][j] = campFire2_tab18[PWM2][j];
+			num_Delay3 = 0;
+			if (step == 0)
+			{
+				for (uint8_t j = 0; j < 36; j++)
+				{
+					data1[PWM1][j] = campFire1_tab1[PWM1][j];
+					data1[PWM2][j] = campFire1_tab1[PWM2][j];
+				}
+			}
+
+
 		}
 	}
 }
@@ -1785,10 +1825,10 @@ void FireMode_Handle(void)
 	else if (FireSize1 == MODE4_FLASHING)
 	{
 		uint8_t zero;
-		zero = GetVoltageValue();
+		zero = Flag_ADAverageZero;
 		if (zero != 0)
 		{
-			Array_CampFire3(GetVoltageValue());
+			Array_CampFire3();
 			for (i = 0; i < 36; i++)
 			{
 				Mapping_SN3236_Pwm1_1[i] = data1[PWM1][i] / 1;
@@ -1798,13 +1838,45 @@ void FireMode_Handle(void)
 			}
 		}
 		else
-			for (i = 0; i < 36; i++)
-			{
-				Mapping_SN3236_Pwm1_1[i] = ((Mapping_SN3236_Pwm1_1[i] == 0) ? 0 : (Mapping_SN3236_Pwm1_1[i] - 1));
-				Mapping_SN3236_Pwm1_2[i] = ((Mapping_SN3236_Pwm1_2[i] == 0) ? 0 : (Mapping_SN3236_Pwm1_2[i] - 1));
-				Mapping_SN3236_Pwm1_1[i] = ((SN3236_Pwm2_1[i] == 0) ? 0 : (SN3236_Pwm2_1[i] - 1));
-				Mapping_SN3236_Pwm1_2[i] = ((SN3236_Pwm2_2[i] == 0) ? 0 : (SN3236_Pwm2_2[i] - 1));
+		{
+			if (Flag_LEDLowest == 0) //ad采集为0时进入这里，但是不立马就灭灯开启最底层的灯，先让最后亮的灯慢慢渐弱，然后渐弱都
+			{						 //为0时（事实是不是很好），然后再亮最底层的一圈，当Flag_ADAverageZero为1时最底层亮
+				Flag_LEDLowest = 1;
+				for (i = 0; i<36; i++)
+				{
+					if (data1[PWM1][i] >= 2)
+					{
+						data1[PWM1][i] -= 2;
+						data1[PWM2][i] -= 2;
+						Flag_LEDLowest = 0;
+					}
+					else if (data1[PWM1][i] == 1)
+					{
+						data1[PWM1][i] = 0;
+						data1[PWM2][i] = 0;
+						Flag_LEDLowest = 0;
+					}
+				}
+				for (i = 0; i<36; i++)
+				{
+					Mapping_SN3236_Pwm1_1[i] = data1[PWM1][i];
+					Mapping_SN3236_Pwm1_2[i] = data1[PWM2][i];
+					Mapping_SN3236_Pwm1_1[i] = data1[PWM1][i];
+					Mapping_SN3236_Pwm1_2[i] = data1[PWM2][i];
+				}
 			}
+			else //当flashZero_Fade_Out为1时最底层一圈亮
+			{
+				Array_CampFire3();//(GetVoltageValue());
+				for (i = 0; i<36; i++)
+				{
+					Mapping_SN3236_Pwm1_1[i] = data1[PWM1][i] / 1;
+					Mapping_SN3236_Pwm1_2[i] = data1[PWM2][i] / 1;
+					Mapping_SN3236_Pwm1_1[i] = data1[PWM1][i] / 4;
+					Mapping_SN3236_Pwm1_2[i] = data1[PWM2][i] / 4;
+				}
+			}
+		}
 	}
 	//地址映射
 	Mapping_Arrary();
@@ -1940,7 +2012,26 @@ void Mapping_Arrary(void)
 	SN3236_Pwm2_2[56 - 1 - 36] = Mapping_SN3236_Pwm1_2[35 - 1];
 }
 
+uint8_t ADAverageValue(void)
+{
+	uint32_t sum;
+	uint16_t adAverageValue;
 
+	for (uint8_t i = 0; i < ADC_DMA_SIZE; i++)
+		AdcAudio_Buf[i] = AdcDma_Buf[i] - 0x0400;//减0x0400是因为最低音量时仍有0x0420左右
+												 //AD_ContinuousToAverage();//连续采集的ad值累加求平均值
+	
+	for (uint8_t i = 0; i < 10; i++)
+	{
+		sum += AdcAudio_Buf[i];
+	}
+	if (adAverageValue < 0x0030)
+		adAverageValue = 0;
+	else 
+		adAverageValue = 0;
+
+	return adAverageValue;
+}
 
 
 

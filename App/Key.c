@@ -241,25 +241,6 @@ void KeyComMsg(void)
   cntUart_Send++;	 
 }
 
-uint8_t GetVoltageValue(void)
-{
-////	uint8_t  i;
-	uint8_t  volValue=0;
-//	volValueData=HAL_ADC_GetValue(&hadc);//
-////	if(volValueData<0x00A0)//采集到的
-////	{
-//////		cntIdle=0;
-////		
-////	}
-//	if((volValueData%10)<10)
-//		volValue=volValueData%10;
-//	else if((volValueData/10%10)<10)
-//		volValue=volValueData/10%10;
-//	HAL_ADC_Start(&hadc);//获取AD值
-//	
-	return volValue;//返回按键
-}
-
 
 
 

@@ -39,10 +39,10 @@ void Array_CampFire2(void);
 
 
 //外部调用_标志位定义flags definetion//
-
+extern uint8_t  Flag_ADAverageZero;
 
 //外部调用_函数定义function definetion//
-
+extern uint8_t ADAverageValue(void);
 
 
 
