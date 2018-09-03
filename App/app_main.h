@@ -8,7 +8,7 @@
 //#include "dma.h"
 //#include "usart.h"
 //#include "gpio.h"
-//#include "adc.h"
+#include "h_adc.h"
 #include "bt_mode.h"
 #include "rgb.h"
 #include "user_uart_dma.h"

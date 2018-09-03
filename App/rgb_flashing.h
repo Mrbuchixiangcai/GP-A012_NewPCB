@@ -5,7 +5,7 @@
 #include "app_main.h"
 
 //宏定义macro definition//
-#define ADC_DMA_SIZE 10
+#define ADC_DMA_SIZE 20
 #define audio_01_max_index	100
 
 //类型定义byte definition//

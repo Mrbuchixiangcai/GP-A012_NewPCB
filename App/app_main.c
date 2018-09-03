@@ -21,18 +21,17 @@ uint8_t  keyBT_bk;
 uint8_t Adc_Dma_Irq_f;
 void ADC_GetBuffer(void) //在中断里面调用，然后中断处理结束进入这里出具求平均
 {
-	uint16_t i;
 	if ((Adc_Dma_Irq_f))// && (FireSize1 == MODE4_FLASHING))
 	{
 		Adc_Dma_Irq_f = 0;
-		if (HAL_ADC_Stop_DMA(&hadc) != HAL_OK)
-		{
-			_Error_Handler(__FILE__, __LINE__);
-		}
-		Flag_ADAverageZero = ADAverageValue();//判断ad采集的数据的平均值是否大于某一值，不大于就定义为0
+//		if (HAL_ADC_Stop_DMA(&hadc) != HAL_OK)
+//		{
+//			_Error_Handler(__FILE__, __LINE__);
+//		}
+		Flag_ADAverageZero = adAverZero;//判断ad采集的数据的平均值是否大于某一值，不大于就定义为0
 		if (HAL_ADC_Start_DMA(&hadc, (uint32_t*)AdcDma_Buf, ADC_DMA_SIZE) != HAL_OK)
 		{
-			_Error_Handler(__FILE__, __LINE__);
+			//_Error_Handler(__FILE__, __LINE__);
 		}
 	}
 }
@@ -45,7 +44,7 @@ uint8_t  AppTick2;
 uint8_t  AppTick3;
 uint8_t  AppTick4;
 uint8_t  AppTick5;
-uint8_t  brightness1;
+uint8_t  brightness1;//
 uint8_t  fireSpeed;
 uint8_t  bt_fire;
 
@@ -66,7 +65,7 @@ void PowerON_Reset(void)
 	SDA12_OUT();
 	FireSize1 = MODE0_OFF_FIRE;
 	PlayMode = PLAY_ON;
-
+	init_adc();
 
 }
 
@@ -79,7 +78,11 @@ void app_main(void)
 		if (AppTick1ms)
 		{
 			AppTick1ms = 0;
-			ADC_GetBuffer();
+			
+			//ADC_GetBuffer();
+			//adc扫描
+			adc_scan ();
+			
 			keyBT = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
 			if (keyBT_bk != keyBT)
 			{

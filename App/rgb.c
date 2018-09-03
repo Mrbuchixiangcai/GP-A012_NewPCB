@@ -22,6 +22,7 @@ uint8_t  num_Delay;
 uint8_t  num_Delay2;//灯光切换到地下一圈亮时延时1s
 uint8_t  num_Delay3;//脉动火焰灯光在切换到下一帧时延迟时间
 uint8_t  ADGrade;   //脉动模式音乐闪动的等级层次
+uint8_t  adAverZero;//电压为0返回值
 
 /*******************************************************************
 功能：灯光位置映射
@@ -774,20 +775,20 @@ const uint8_t campFire2_tab39[2][36] =
 const uint8_t campFire3_tab1[2][36] =
 {
 //   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
-	000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
-	000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
+	200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,000,000,000,000,000,000,
+	000,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,000,000,000,000,000,000,000,
 };
 const uint8_t campFire3_tab2[2][36] =
 {
 //   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
-	200,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
-	000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,000,000,000,000,000,000,000,
+	000,200,000,000,000,000,000,000,000,000,000,000,000,000,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
+	000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
 };
 const uint8_t campFire3_tab3[2][36] =
 {
 //   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
-	000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,000,000,000,000,000,000,
-	200,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
+	000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
+	200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,200,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
 };
 
 
@@ -812,7 +813,7 @@ const uint8_t campFire4_tab3[2][36] =
 	200,200,200,200,000,200,000,000,000,000,000,000,000,000,200,200,200,200,000,200,000,000,000,000,000,000,000,000,000,200,000,200,000,200,000,000,
 	200,200,200,200,000,200,000,000,000,000,000,000,000,000,200,200,200,200,000,200,000,000,000,000,000,000,000,000,200,000,200,000,000,000,000,000,
 };
-const uint8_t campFire4_tab41[2][36] =
+const uint8_t campFire4_tab4[2][36] =
 {
 //   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
 	200,200,200,200,000,200,000,200,000,000,000,000,000,000,200,200,200,200,000,200,000,200,000,000,000,000,000,000,000,200,000,200,000,200,000,200,
@@ -960,48 +961,48 @@ void Array_CampFire3(void)
 			{
 				for (uint8_t j = 0; j < 36; j++)
 				{
-					data1[PWM1][j] = campFire1_tab1[PWM1][j];
-					data1[PWM2][j] = campFire1_tab1[PWM2][j];
+					data1[PWM1][j] = campFire4_tab1[PWM1][j];
+					data1[PWM2][j] = campFire4_tab1[PWM2][j];
 				}
 			}
 			if (step == 2)
 			{
 				for (uint8_t j = 0; j < 36; j++)
 				{
-					data1[PWM1][j] = campFire1_tab1[PWM1][j];
-					data1[PWM2][j] = campFire1_tab1[PWM2][j];
+					data1[PWM1][j] = campFire4_tab2[PWM1][j];
+					data1[PWM2][j] = campFire4_tab2[PWM2][j];
 				}
 			}
 			if (step == 3)
 			{
 				for (uint8_t j = 0; j < 36; j++)
 				{
-					data1[PWM1][j] = campFire1_tab1[PWM1][j];
-					data1[PWM2][j] = campFire1_tab1[PWM2][j];
+					data1[PWM1][j] = campFire4_tab3[PWM1][j];
+					data1[PWM2][j] = campFire4_tab3[PWM2][j];
 				}
 			}
 			if (step == 4)
 			{
 				for (uint8_t j = 0; j < 36; j++)
 				{
-					data1[PWM1][j] = campFire1_tab1[PWM1][j];
-					data1[PWM2][j] = campFire1_tab1[PWM2][j];
+					data1[PWM1][j] = campFire4_tab4[PWM1][j];
+					data1[PWM2][j] = campFire4_tab4[PWM2][j];
 				}
 			}
 			if (step == 5)
 			{
 				for (uint8_t j = 0; j < 36; j++)
 				{
-					data1[PWM1][j] = campFire1_tab1[PWM1][j];
-					data1[PWM2][j] = campFire1_tab1[PWM2][j];
+					data1[PWM1][j] = campFire4_tab5[PWM1][j];
+					data1[PWM2][j] = campFire4_tab5[PWM2][j];
 				}
 			}
 			if (step == 6)
 			{
 				for (uint8_t j = 0; j < 36; j++)
 				{
-					data1[PWM1][j] = campFire1_tab1[PWM1][j];
-					data1[PWM2][j] = campFire1_tab1[PWM2][j];
+					data1[PWM1][j] = campFire4_tab6[PWM1][j];
+					data1[PWM2][j] = campFire4_tab6[PWM2][j];
 				}
 			}
 		}
@@ -2033,98 +2034,118 @@ void Mapping_Arrary(void)
 	//		SN3236_Pwm1_2[i+36] = Mapping_SN3236_Pwm1_2[(mapping_tab2_1[i])]; //37-48
 	//		SN3236_Pwm1_2[i+48] = Mapping_SN3236_Pwm1_2[(mapping_tab2_2[i])]; //49-60
 	//	}
-	SN3236_Pwm2_1[ 1 - 1] = Mapping_SN3236_Pwm1_1[30 - 1];
-	SN3236_Pwm2_1[ 3 - 1] = Mapping_SN3236_Pwm1_1[32 - 1];
-	SN3236_Pwm2_1[ 5 - 1] = Mapping_SN3236_Pwm1_1[34 - 1];
-	SN3236_Pwm2_1[ 7 - 1] = Mapping_SN3236_Pwm1_1[36 - 1];
-	SN3236_Pwm2_1[ 2 - 1] = Mapping_SN3236_Pwm1_1[15 - 1];
-	SN3236_Pwm2_1[ 4 - 1] = Mapping_SN3236_Pwm1_1[17 - 1];
-	SN3236_Pwm2_1[ 6 - 1] = Mapping_SN3236_Pwm1_1[19 - 1];
-	SN3236_Pwm2_1[ 8 - 1] = Mapping_SN3236_Pwm1_1[21 - 1];
-	SN3236_Pwm2_1[10 - 1] = Mapping_SN3236_Pwm1_1[23 - 1];
-	SN3236_Pwm2_1[12 - 1] = Mapping_SN3236_Pwm1_1[25 - 1];
-	SN3236_Pwm2_1[13 - 1] = Mapping_SN3236_Pwm1_1[16 - 1];
-	SN3236_Pwm2_1[15 - 1] = Mapping_SN3236_Pwm1_1[18 - 1];
-	SN3236_Pwm2_1[17 - 1] = Mapping_SN3236_Pwm1_1[20 - 1];
-	SN3236_Pwm2_1[19 - 1] = Mapping_SN3236_Pwm1_1[22 - 1];
-	SN3236_Pwm2_1[21 - 1] = Mapping_SN3236_Pwm1_1[24 - 1];
-	SN3236_Pwm2_1[23 - 1] = Mapping_SN3236_Pwm1_1[26 - 1];
-	SN3236_Pwm2_1[14 - 1] = Mapping_SN3236_Pwm1_1[ 1 - 1];
-	SN3236_Pwm2_1[16 - 1] = Mapping_SN3236_Pwm1_1[ 3 - 1];
-	SN3236_Pwm2_1[18 - 1] = Mapping_SN3236_Pwm1_1[ 5 - 1];
-	SN3236_Pwm2_1[20 - 1] = Mapping_SN3236_Pwm1_1[ 7 - 1];
-	SN3236_Pwm2_1[22 - 1] = Mapping_SN3236_Pwm1_1[ 9 - 1];
-	SN3236_Pwm2_1[24 - 1] = Mapping_SN3236_Pwm1_1[11 - 1];
-	SN3236_Pwm2_1[25 - 1] = Mapping_SN3236_Pwm1_1[ 2 - 1];
-	SN3236_Pwm2_1[27 - 1] = Mapping_SN3236_Pwm1_1[ 4 - 1];
-	SN3236_Pwm2_1[29 - 1] = Mapping_SN3236_Pwm1_1[ 6 - 1];
-	SN3236_Pwm2_1[31 - 1] = Mapping_SN3236_Pwm1_1[ 8 - 1];
-	SN3236_Pwm2_1[33 - 1] = Mapping_SN3236_Pwm1_1[10 - 1];
-	SN3236_Pwm2_1[35 - 1] = Mapping_SN3236_Pwm1_1[12 - 1];
+//	SN3236_Pwm2_1[ 1 - 1] = Mapping_SN3236_Pwm1_1[30 - 1];
+//	SN3236_Pwm2_1[ 3 - 1] = Mapping_SN3236_Pwm1_1[32 - 1];
+//	SN3236_Pwm2_1[ 5 - 1] = Mapping_SN3236_Pwm1_1[34 - 1];
+//	SN3236_Pwm2_1[ 7 - 1] = Mapping_SN3236_Pwm1_1[36 - 1];
+//	SN3236_Pwm2_1[ 2 - 1] = Mapping_SN3236_Pwm1_1[15 - 1];
+//	SN3236_Pwm2_1[ 4 - 1] = Mapping_SN3236_Pwm1_1[17 - 1];
+//	SN3236_Pwm2_1[ 6 - 1] = Mapping_SN3236_Pwm1_1[19 - 1];
+//	SN3236_Pwm2_1[ 8 - 1] = Mapping_SN3236_Pwm1_1[21 - 1];
+//	SN3236_Pwm2_1[10 - 1] = Mapping_SN3236_Pwm1_1[23 - 1];
+//	SN3236_Pwm2_1[12 - 1] = Mapping_SN3236_Pwm1_1[25 - 1];
+//	SN3236_Pwm2_1[13 - 1] = Mapping_SN3236_Pwm1_1[16 - 1];
+//	SN3236_Pwm2_1[15 - 1] = Mapping_SN3236_Pwm1_1[18 - 1];
+//	SN3236_Pwm2_1[17 - 1] = Mapping_SN3236_Pwm1_1[20 - 1];
+//	SN3236_Pwm2_1[19 - 1] = Mapping_SN3236_Pwm1_1[22 - 1];
+//	SN3236_Pwm2_1[21 - 1] = Mapping_SN3236_Pwm1_1[24 - 1];
+//	SN3236_Pwm2_1[23 - 1] = Mapping_SN3236_Pwm1_1[26 - 1];
+//	SN3236_Pwm2_1[14 - 1] = Mapping_SN3236_Pwm1_1[ 1 - 1];
+//	SN3236_Pwm2_1[16 - 1] = Mapping_SN3236_Pwm1_1[ 3 - 1];
+//	SN3236_Pwm2_1[18 - 1] = Mapping_SN3236_Pwm1_1[ 5 - 1];
+//	SN3236_Pwm2_1[20 - 1] = Mapping_SN3236_Pwm1_1[ 7 - 1];
+//	SN3236_Pwm2_1[22 - 1] = Mapping_SN3236_Pwm1_1[ 9 - 1];
+//	SN3236_Pwm2_1[24 - 1] = Mapping_SN3236_Pwm1_1[11 - 1];
+//	SN3236_Pwm2_1[25 - 1] = Mapping_SN3236_Pwm1_1[ 2 - 1];
+//	SN3236_Pwm2_1[27 - 1] = Mapping_SN3236_Pwm1_1[ 4 - 1];
+//	SN3236_Pwm2_1[29 - 1] = Mapping_SN3236_Pwm1_1[ 6 - 1];
+//	SN3236_Pwm2_1[31 - 1] = Mapping_SN3236_Pwm1_1[ 8 - 1];
+//	SN3236_Pwm2_1[33 - 1] = Mapping_SN3236_Pwm1_1[10 - 1];
+//	SN3236_Pwm2_1[35 - 1] = Mapping_SN3236_Pwm1_1[12 - 1];
+//	SN3236_Pwm2_1[26 - 1] = Mapping_SN3236_Pwm1_2[ 1 - 1];
+//	SN3236_Pwm2_1[28 - 1] = Mapping_SN3236_Pwm1_2[ 3 - 1];
+//	SN3236_Pwm2_1[30 - 1] = Mapping_SN3236_Pwm1_2[ 5 - 1];
+//	SN3236_Pwm2_1[32 - 1] = Mapping_SN3236_Pwm1_2[ 7 - 1];
+//	SN3236_Pwm2_1[34 - 1] = Mapping_SN3236_Pwm1_2[ 9 - 1];
+//	SN3236_Pwm2_1[36 - 1] = Mapping_SN3236_Pwm1_2[11 - 1];
+//	SN3236_Pwm2_2[37 - 1 - 36] = Mapping_SN3236_Pwm1_2[ 2 - 1];
+//	SN3236_Pwm2_2[39 - 1 - 36] = Mapping_SN3236_Pwm1_2[ 4 - 1];
+//	SN3236_Pwm2_2[41 - 1 - 36] = Mapping_SN3236_Pwm1_2[ 6 - 1];
+//	SN3236_Pwm2_2[43 - 1 - 36] = Mapping_SN3236_Pwm1_2[ 8 - 1];
+//	SN3236_Pwm2_2[45 - 1 - 36] = Mapping_SN3236_Pwm1_2[10 - 1];
+//	SN3236_Pwm2_2[47 - 1 - 36] = Mapping_SN3236_Pwm1_2[12 - 1];
+//	SN3236_Pwm2_2[38 - 1 - 36] = Mapping_SN3236_Pwm1_2[15 - 1];
+//	SN3236_Pwm2_2[40 - 1 - 36] = Mapping_SN3236_Pwm1_2[17 - 1];
+//	SN3236_Pwm2_2[42 - 1 - 36] = Mapping_SN3236_Pwm1_2[19 - 1];
+//	SN3236_Pwm2_2[44 - 1 - 36] = Mapping_SN3236_Pwm1_2[21 - 1];
+//	SN3236_Pwm2_2[46 - 1 - 36] = Mapping_SN3236_Pwm1_2[23 - 1];
+//	SN3236_Pwm2_2[48 - 1 - 36] = Mapping_SN3236_Pwm1_2[25 - 1];
+//	SN3236_Pwm2_2[49 - 1 - 36] = Mapping_SN3236_Pwm1_2[16 - 1];
+//	SN3236_Pwm2_2[51 - 1 - 36] = Mapping_SN3236_Pwm1_2[18 - 1];
+//	SN3236_Pwm2_2[53 - 1 - 36] = Mapping_SN3236_Pwm1_2[20 - 1];
+//	SN3236_Pwm2_2[55 - 1 - 36] = Mapping_SN3236_Pwm1_2[22 - 1];
+//	SN3236_Pwm2_2[57 - 1 - 36] = Mapping_SN3236_Pwm1_2[24 - 1];
+//	SN3236_Pwm2_2[59 - 1 - 36] = Mapping_SN3236_Pwm1_2[26 - 1];
+//	SN3236_Pwm2_2[50 - 1 - 36] = Mapping_SN3236_Pwm1_2[29 - 1];
+//	SN3236_Pwm2_2[52 - 1 - 36] = Mapping_SN3236_Pwm1_2[31 - 1];
+//	SN3236_Pwm2_2[54 - 1 - 36] = Mapping_SN3236_Pwm1_2[33 - 1];
+//	SN3236_Pwm2_2[56 - 1 - 36] = Mapping_SN3236_Pwm1_2[35 - 1];
+	SN3236_Pwm2_1[ 2 - 1] = Mapping_SN3236_Pwm1_2[29 - 1];
+	SN3236_Pwm2_1[ 4 - 1] = Mapping_SN3236_Pwm1_2[31 - 1];
+	SN3236_Pwm2_1[ 6 - 1] = Mapping_SN3236_Pwm1_2[33 - 1];
+	SN3236_Pwm2_1[ 8 - 1] = Mapping_SN3236_Pwm1_2[35 - 1];
+	SN3236_Pwm2_1[ 1 - 1] = Mapping_SN3236_Pwm1_2[16 - 1];
+	SN3236_Pwm2_1[ 3 - 1] = Mapping_SN3236_Pwm1_2[18 - 1];
+	SN3236_Pwm2_1[ 5 - 1] = Mapping_SN3236_Pwm1_2[20 - 1];
+	SN3236_Pwm2_1[ 7 - 1] = Mapping_SN3236_Pwm1_2[22 - 1];
+	SN3236_Pwm2_1[ 9 - 1] = Mapping_SN3236_Pwm1_2[24 - 1];
+	SN3236_Pwm2_1[11 - 1] = Mapping_SN3236_Pwm1_2[26 - 1];
+	SN3236_Pwm2_1[14 - 1] = Mapping_SN3236_Pwm1_2[15 - 1];
+	SN3236_Pwm2_1[16 - 1] = Mapping_SN3236_Pwm1_2[17 - 1];
+	SN3236_Pwm2_1[18 - 1] = Mapping_SN3236_Pwm1_2[19 - 1];
+	SN3236_Pwm2_1[20 - 1] = Mapping_SN3236_Pwm1_2[21 - 1];
+	SN3236_Pwm2_1[22 - 1] = Mapping_SN3236_Pwm1_2[23 - 1];
+	SN3236_Pwm2_1[24 - 1] = Mapping_SN3236_Pwm1_2[25 - 1];
+	SN3236_Pwm2_1[13 - 1] = Mapping_SN3236_Pwm1_2[ 2 - 1];
+	SN3236_Pwm2_1[15 - 1] = Mapping_SN3236_Pwm1_2[ 4 - 1];
+	SN3236_Pwm2_1[17 - 1] = Mapping_SN3236_Pwm1_2[ 6 - 1];
+	SN3236_Pwm2_1[19 - 1] = Mapping_SN3236_Pwm1_2[ 8 - 1];
+	SN3236_Pwm2_1[21 - 1] = Mapping_SN3236_Pwm1_2[10 - 1];
+	SN3236_Pwm2_1[23 - 1] = Mapping_SN3236_Pwm1_2[12 - 1];
 	SN3236_Pwm2_1[26 - 1] = Mapping_SN3236_Pwm1_2[ 1 - 1];
 	SN3236_Pwm2_1[28 - 1] = Mapping_SN3236_Pwm1_2[ 3 - 1];
 	SN3236_Pwm2_1[30 - 1] = Mapping_SN3236_Pwm1_2[ 5 - 1];
 	SN3236_Pwm2_1[32 - 1] = Mapping_SN3236_Pwm1_2[ 7 - 1];
 	SN3236_Pwm2_1[34 - 1] = Mapping_SN3236_Pwm1_2[ 9 - 1];
 	SN3236_Pwm2_1[36 - 1] = Mapping_SN3236_Pwm1_2[11 - 1];
-	SN3236_Pwm2_2[37 - 1 - 36] = Mapping_SN3236_Pwm1_2[ 2 - 1];
-	SN3236_Pwm2_2[39 - 1 - 36] = Mapping_SN3236_Pwm1_2[ 4 - 1];
-	SN3236_Pwm2_2[41 - 1 - 36] = Mapping_SN3236_Pwm1_2[ 6 - 1];
-	SN3236_Pwm2_2[43 - 1 - 36] = Mapping_SN3236_Pwm1_2[ 8 - 1];
-	SN3236_Pwm2_2[45 - 1 - 36] = Mapping_SN3236_Pwm1_2[10 - 1];
-	SN3236_Pwm2_2[47 - 1 - 36] = Mapping_SN3236_Pwm1_2[12 - 1];
-	SN3236_Pwm2_2[38 - 1 - 36] = Mapping_SN3236_Pwm1_2[15 - 1];
-	SN3236_Pwm2_2[40 - 1 - 36] = Mapping_SN3236_Pwm1_2[17 - 1];
-	SN3236_Pwm2_2[42 - 1 - 36] = Mapping_SN3236_Pwm1_2[19 - 1];
-	SN3236_Pwm2_2[44 - 1 - 36] = Mapping_SN3236_Pwm1_2[21 - 1];
-	SN3236_Pwm2_2[46 - 1 - 36] = Mapping_SN3236_Pwm1_2[23 - 1];
-	SN3236_Pwm2_2[48 - 1 - 36] = Mapping_SN3236_Pwm1_2[25 - 1];
-	SN3236_Pwm2_2[49 - 1 - 36] = Mapping_SN3236_Pwm1_2[16 - 1];
-	SN3236_Pwm2_2[51 - 1 - 36] = Mapping_SN3236_Pwm1_2[18 - 1];
-	SN3236_Pwm2_2[53 - 1 - 36] = Mapping_SN3236_Pwm1_2[20 - 1];
-	SN3236_Pwm2_2[55 - 1 - 36] = Mapping_SN3236_Pwm1_2[22 - 1];
-	SN3236_Pwm2_2[57 - 1 - 36] = Mapping_SN3236_Pwm1_2[24 - 1];
-	SN3236_Pwm2_2[59 - 1 - 36] = Mapping_SN3236_Pwm1_2[26 - 1];
-	SN3236_Pwm2_2[50 - 1 - 36] = Mapping_SN3236_Pwm1_2[29 - 1];
-	SN3236_Pwm2_2[52 - 1 - 36] = Mapping_SN3236_Pwm1_2[31 - 1];
-	SN3236_Pwm2_2[54 - 1 - 36] = Mapping_SN3236_Pwm1_2[33 - 1];
-	SN3236_Pwm2_2[56 - 1 - 36] = Mapping_SN3236_Pwm1_2[35 - 1];
-}
-
-uint8_t ADAverageValue(void)
-{
-	uint32_t sum;
-	uint16_t adAverageValue;
-
-	for (uint8_t i = 0; i < ADC_DMA_SIZE; i++)
-		AdcAudio_Buf[i] = AdcDma_Buf[i] - 0x0400;//减0x0400是因为最低音量时仍有0x0420左右
-												 //AD_ContinuousToAverage();//连续采集的ad值累加求平均值
-	
-	for (uint8_t i = 0; i < 10; i++)
-	{
-		sum += AdcAudio_Buf[i];
-	}
-	adAverageValue = sum / adAverageValue;
-
-	if (adAverageValue < 0x0030)
-		adAverageValue = 0;
-	else 
-		adAverageValue = 1;
-	
-	if ((adAverageValue >= 0x0030) && (adAverageValue <= 0x01F7))
-		ADGrade = 1;
-	else if ((adAverageValue >= 0x01F7) && (adAverageValue <= 0x03EE))
-		ADGrade = 2;
-	else if ((adAverageValue >= 0x03EE) && (adAverageValue <= 0x05E5))
-		ADGrade = 3;
-	else if ((adAverageValue >= 0x05E5) && (adAverageValue <= 0x07DC))
-		ADGrade = 4;
-	else if ((adAverageValue >= 0x07DC) && (adAverageValue <= 0x09D3))
-		ADGrade = 5;
-	else if (adAverageValue >= 0x09D3)
-		ADGrade = 6;
-
-	return adAverageValue;
+	SN3236_Pwm2_1[25 - 1] = Mapping_SN3236_Pwm1_1[ 2 - 1];
+	SN3236_Pwm2_1[27 - 1] = Mapping_SN3236_Pwm1_1[ 4 - 1];
+	SN3236_Pwm2_1[29 - 1] = Mapping_SN3236_Pwm1_1[ 6 - 1];
+	SN3236_Pwm2_1[31 - 1] = Mapping_SN3236_Pwm1_1[ 8 - 1];
+	SN3236_Pwm2_1[33 - 1] = Mapping_SN3236_Pwm1_1[10 - 1];
+	SN3236_Pwm2_1[35 - 1] = Mapping_SN3236_Pwm1_1[12 - 1];
+	SN3236_Pwm2_2[38 - 1 - 36] = Mapping_SN3236_Pwm1_1[ 1 - 1];
+	SN3236_Pwm2_2[40 - 1 - 36] = Mapping_SN3236_Pwm1_1[ 3 - 1];
+	SN3236_Pwm2_2[42 - 1 - 36] = Mapping_SN3236_Pwm1_1[ 5 - 1];
+	SN3236_Pwm2_2[44 - 1 - 36] = Mapping_SN3236_Pwm1_1[ 7 - 1];
+	SN3236_Pwm2_2[46 - 1 - 36] = Mapping_SN3236_Pwm1_1[ 9 - 1];
+	SN3236_Pwm2_2[48 - 1 - 36] = Mapping_SN3236_Pwm1_1[11 - 1];
+	SN3236_Pwm2_2[37 - 1 - 36] = Mapping_SN3236_Pwm1_1[16 - 1];
+	SN3236_Pwm2_2[39 - 1 - 36] = Mapping_SN3236_Pwm1_1[18 - 1];
+	SN3236_Pwm2_2[41 - 1 - 36] = Mapping_SN3236_Pwm1_1[20 - 1];
+	SN3236_Pwm2_2[43 - 1 - 36] = Mapping_SN3236_Pwm1_1[22 - 1];
+	SN3236_Pwm2_2[45 - 1 - 36] = Mapping_SN3236_Pwm1_1[24 - 1];
+	SN3236_Pwm2_2[47 - 1 - 36] = Mapping_SN3236_Pwm1_1[26 - 1];
+	SN3236_Pwm2_2[50 - 1 - 36] = Mapping_SN3236_Pwm1_1[15 - 1];
+	SN3236_Pwm2_2[52 - 1 - 36] = Mapping_SN3236_Pwm1_1[17 - 1];
+	SN3236_Pwm2_2[54 - 1 - 36] = Mapping_SN3236_Pwm1_1[19 - 1];
+	SN3236_Pwm2_2[56 - 1 - 36] = Mapping_SN3236_Pwm1_1[21 - 1];
+	SN3236_Pwm2_2[58 - 1 - 36] = Mapping_SN3236_Pwm1_1[23 - 1];
+	SN3236_Pwm2_2[60 - 1 - 36] = Mapping_SN3236_Pwm1_1[25 - 1];
+	SN3236_Pwm2_2[49 - 1 - 36] = Mapping_SN3236_Pwm1_1[30 - 1];
+	SN3236_Pwm2_2[51 - 1 - 36] = Mapping_SN3236_Pwm1_1[32 - 1];
+	SN3236_Pwm2_2[53 - 1 - 36] = Mapping_SN3236_Pwm1_1[34 - 1];
+	SN3236_Pwm2_2[55 - 1 - 36] = Mapping_SN3236_Pwm1_1[36 - 1];
 }
 
 

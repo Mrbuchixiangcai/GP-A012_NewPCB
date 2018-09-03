@@ -33,6 +33,7 @@ gp-a012\stm32f0xx_it.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_e
 gp-a012\stm32f0xx_it.o: ../Inc/stm32f0xx_it.h
 gp-a012\stm32f0xx_it.o: ..\App\app_main.h
 gp-a012\stm32f0xx_it.o: C:\ProgramFiles2\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+gp-a012\stm32f0xx_it.o: ..\App\h_adc.h
 gp-a012\stm32f0xx_it.o: ..\App\bt_mode.h
 gp-a012\stm32f0xx_it.o: ..\App\app_main.h
 gp-a012\stm32f0xx_it.o: ..\App\rgb.h

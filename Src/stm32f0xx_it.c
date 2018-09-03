@@ -146,11 +146,15 @@ void SysTick_Handler(void)
 void DMA1_Channel1_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
-  extern uint8_t Adc_Dma_Irq_f;
+  //extern uint8_t Adc_Dma_Irq_f;
   /* USER CODE END DMA1_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_adc);
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
-  Adc_Dma_Irq_f=1;
+	
+	//Adc_Dma_Irq_f=1;
+	//标记传输完成
+	DMA_interrupt_flag=1;
+	
   /* USER CODE END DMA1_Channel1_IRQn 1 */
 }
 

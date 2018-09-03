@@ -32,6 +32,7 @@ gp-a012\rgb_flashing.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr_ex
 gp-a012\rgb_flashing.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h
 gp-a012\rgb_flashing.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h
 gp-a012\rgb_flashing.o: C:\ProgramFiles2\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+gp-a012\rgb_flashing.o: ..\App\h_adc.h
 gp-a012\rgb_flashing.o: ..\App\bt_mode.h
 gp-a012\rgb_flashing.o: ..\App\app_main.h
 gp-a012\rgb_flashing.o: ..\App\rgb.h

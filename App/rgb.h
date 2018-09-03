@@ -36,13 +36,15 @@ void Array_CampFire2(void);
 
 
 //外部调用_变量定义variable definition//
-
+extern uint8_t  ADGrade;   //脉动模式音乐闪动的等级层次
+extern uint8_t  adAverZero;//电压为0返回值
 
 //外部调用_标志位定义flags definetion//
 extern uint8_t  Flag_ADAverageZero;
 
+
 //外部调用_函数定义function definetion//
-extern uint8_t ADAverageValue(void);
+extern void ADAverageValue(void);
 
 
 

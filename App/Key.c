@@ -11,11 +11,11 @@
 uint8_t   gbKeyPress;     //按键按下
 uint8_t   gbKeyNone;      //没有按键按下
 uint8_t   KeyValue;       //按键值
+uint8_t   cntKeyLong;     //按键按下时间计数，可用于长按键和其他
 uint16_t  AdcValue;       //最初采集的AD值
 uint8_t   KeyEvent;       //按键事件
 uint8_t   cntKeyLoop;     //计数按键循环，短按，长按，超长按的按下时间
 uint8_t   KeyCurValueBK;  //当前按键值备份
-uint8_t   cntKeyLong;
 uint8_t   keyNum;
 uint8_t   volValueData;		  //采集到的初步电压值
 
@@ -171,7 +171,6 @@ void KeyComMsg(void)
 //				break;
 //			}
 			case KU(T_LIGHT): 
-			case KLU(T_LIGHT):
 			{
 				if(PlayMode==PLAY_BT)
 				{
@@ -224,6 +223,16 @@ void KeyComMsg(void)
 				 cntUart_Send=0;	
 				 Usart1SendData_DMA(&SPASongs_Num_Table[keyNum][0]);
 				}					
+				break;
+			}
+			case KLU(T_LIGHT):
+			{
+				if (cntKeyLong >= 50) 
+					break;
+				if(brightness1==1)
+					brightness1=3;
+				else
+					brightness1=1;
 				break;
 			}
 		}
