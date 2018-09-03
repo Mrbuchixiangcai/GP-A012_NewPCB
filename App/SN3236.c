@@ -44,16 +44,16 @@ void SN3236_Init1(void)
 	IIC_Init1();
 }
 u8  xxxx;
+u8  yyyy;
 void SN3236_Driver()
 {
-//	u8 i;
+	u8 i;
 //	for(i=0;i<36;i++)
-//		SN3236_Pwm1[i]=0x00;
+//		SN3236_Pwm2_1[i]=0x00;
 //	for(i=0;i<36;i++)
-//		SN3236_Pwm2[i]=0x00;
-//	for(i=0;i<36;i++)
-//		SN3236_Pwm3[i]=0x00;
-//	SN3236_Pwm1[xxxx]=0xF0;
+//		SN3236_Pwm2_1[i]=0x00;
+//	SN3236_Pwm2_1[xxxx]=0xF0;
+//	SN3236_Pwm2_2[yyyy]=0xF0;	
 	SN3236_RegWrite(SN3236_RegBuffer);	
 //	if(++xxxx>=36)
 //		xxxx=0;
