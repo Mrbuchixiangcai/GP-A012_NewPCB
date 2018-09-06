@@ -25,6 +25,11 @@
 #define  KEY_LIGHT()   HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_4)
 #define  BT_POWER()    HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_0)
 
+#define  POWER_LED(a) if (a)												   \
+						HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET);   \
+					  else													   \
+						HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET)
+
 //类型定义byte definition//
 enum
 {
@@ -48,7 +53,7 @@ enum
 
 
 //外部调用_变量定义variable definition//
-
+extern uint8_t   keyNum;
 
 //外部调用_标志位定义flags definetion//
 

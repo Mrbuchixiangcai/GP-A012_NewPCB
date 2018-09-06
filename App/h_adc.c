@@ -170,20 +170,64 @@ uint16_t adAverageValue;
 void ADAverageValue(void)
 {
 	adAverageValue = audio_ad.current_average;
-	if ((adAverageValue >= 0x0030) && (adAverageValue <= 0x01F7))
+	//if ((adAverageValue >= 0x0030) && (adAverageValue <= 0x01F7)) //这是6层的
+	//	ADGrade = 1;
+	//else if ((adAverageValue >= 0x01F7) && (adAverageValue <= 0x03EE))
+	//	ADGrade = 2;
+	//else if ((adAverageValue >= 0x03EE) && (adAverageValue <= 0x05E5))
+	//	ADGrade = 3;
+	//else if ((adAverageValue >= 0x05E5) && (adAverageValue <= 0x07DC))
+	//	ADGrade = 4;
+	//else if ((adAverageValue >= 0x07DC) && (adAverageValue <= 0x09D3))
+	//	ADGrade = 5;
+	//else if (adAverageValue >= 0x09D3)
+	//	ADGrade = 6;
+//	if ((adAverageValue >= 0x0030) && (adAverageValue <= 0x0145)) //这是11层的
+//		ADGrade = 1;
+//	else if ((adAverageValue >= 0x0145) && (adAverageValue <= 0x028A))
+//		ADGrade = 2;
+//	else if ((adAverageValue >= 0x028A) && (adAverageValue <= 0x03CF))
+//		ADGrade = 3;
+//	else if ((adAverageValue >= 0x03CF) && (adAverageValue <= 0x0514))
+//		ADGrade = 4;
+//	else if ((adAverageValue >= 0x0514) && (adAverageValue <= 0x0659))
+//		ADGrade = 5;
+//	else if ((adAverageValue >= 0x0659) && (adAverageValue <= 0x079E))
+//		ADGrade = 6;
+//	else if ((adAverageValue >= 0x079E) && (adAverageValue <= 0x08E3))
+//		ADGrade = 7;
+//	else if ((adAverageValue >= 0x08E3) && (adAverageValue <= 0x0A28))
+//		ADGrade = 8;
+//	else if ((adAverageValue >= 0x0A28) && (adAverageValue <= 0x0B6D))
+//		ADGrade = 9;
+//	else if ((adAverageValue >= 0x0B6D) && (adAverageValue <= 0x0CB2))
+//		ADGrade = 10;
+//	else if (adAverageValue >= 0x0CB2)
+//		ADGrade = 11;
+	if ((adAverageValue >= 0x0030) && (adAverageValue < 0x004F)) //这是11层的
 		ADGrade = 1;
-	else if ((adAverageValue >= 0x01F7) && (adAverageValue <= 0x03EE))
+	else if (adAverageValue <= 0x006E)
 		ADGrade = 2;
-	else if ((adAverageValue >= 0x03EE) && (adAverageValue <= 0x05E5))
+	else if (adAverageValue <= 0x008D)
 		ADGrade = 3;
-	else if ((adAverageValue >= 0x05E5) && (adAverageValue <= 0x07DC))
+	else if (adAverageValue <= 0x00AC) //0END
 		ADGrade = 4;
-	else if ((adAverageValue >= 0x07DC) && (adAverageValue <= 0x09D3))
+	else if (adAverageValue <= 0x0109) 
 		ADGrade = 5;
-	else if (adAverageValue >= 0x09D3)
+	else if (adAverageValue <= 0x0166) //3END
 		ADGrade = 6;
+	else if (adAverageValue <= 0x01F1) //5END
+		ADGrade = 7;
+	else if (adAverageValue <= 0x02AB) //7END
+		ADGrade = 8;
+	else if (adAverageValue <= 0x0393) //9END
+		ADGrade = 9;
+	else if (adAverageValue <= 0x04AA) //BFF
+		ADGrade = 10;
+	else if (adAverageValue > 0x04AA)//FEND
+		ADGrade = 11;
 
-	if (adAverageValue < 0x0030)
+	if (adAverageValue < 0x0020)
 	{	
 		adAverZero = 0;
 		ADGrade = 0;

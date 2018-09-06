@@ -24,7 +24,7 @@
 
 //外部调用_类型定义byte definition//
 
-#define  RECEIVELEN  100
+#define  RECEIVELEN  30
 //外部调用_变量定义variable definition//
 extern uint8_t  Uart1_ReceiveBuffer[RECEIVELEN];
 extern uint8_t  Uart1_TransmitBuffer[RECEIVELEN];

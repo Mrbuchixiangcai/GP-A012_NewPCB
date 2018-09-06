@@ -48,6 +48,39 @@ uint8_t  brightness1;//
 uint8_t  fireSpeed;
 uint8_t  bt_fire;
 
+void Scan_ON(void)
+{
+	if((!KEY_LIGHT()) || (keyBT==1) || (PlayMode != PLAY_OFF))//µÆ¹â°´¼ü
+	{
+		POWER_LED(1);
+	}
+}
+
+void Scan_OFF(void)
+{
+	if(PlayMode == PLAY_OFF)
+	{
+		FireSize1 = MODE0_OFF_FIRE;
+		keyNum=0;
+		POWER_LED(0);
+	}
+}
+
+void ScanBTVol(void)
+{
+	
+	if (keyBT_bk != keyBT)
+	{
+		keyBT_bk = keyBT;
+		if (keyBT == 1)
+			PlayMode = PLAY_BT;
+		else
+		{
+			PlayMode = PLAY_OFF;
+			FireSize1 = MODE0_OFF_FIRE;
+		}
+	}
+}
 
 
 void PowerON_Reset(void)
@@ -73,28 +106,19 @@ void PowerON_Reset(void)
 void app_main(void)
 {
 	PowerON_Reset();
+	HAL_UART_Receive_IT(&huart1, Uart1_ReceiveBuffer, RECEIVELEN);
 	while (1)
 	{
 		if (AppTick1ms)
 		{
 			AppTick1ms = 0;
-			
+			keyBT = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
 			//ADC_GetBuffer();
 			//adcÉ¨Ãè
 			adc_scan ();
-			
-			keyBT = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
-			if (keyBT_bk != keyBT)
-			{
-				keyBT_bk = keyBT;
-				if (keyBT == 1)
-					PlayMode = PLAY_BT;
-				else
-				{
-					PlayMode = PLAY_OFF;
-					FireSize1 = MODE0_OFF_FIRE;
-				}
-			}
+			Scan_ON();
+			Scan_OFF();
+			ScanBTVol();
 		}
 		if (AppTick0)
 		{

@@ -15,7 +15,17 @@ uint8_t  BT_TransmitBuffer[RECEIVELEN];
 uint8_t  Uart1_RX_Timeout;
 uint8_t   enUart_Send=0;
 //标志位定义flags definetion//
-
+uint8_t mPtr_Receive=0;
+uint8_t sPtr_Receive=0;
+HAL_StatusTypeDef User_UART_Receive_IT(UART_HandleTypeDef *huart)
+{
+  uint16_t uhMask = huart->Mask;
+	Uart1_ReceiveBuffer[mPtr_Receive]=(uint8_t)(huart->Instance->RDR & (uint8_t)uhMask);
+	if(++mPtr_Receive>=(RECEIVELEN))
+		mPtr_Receive=0;
+	Uart1_RX_Timeout=10;
+  return HAL_OK;
+}
 void Usart1SendData_DMA(uint8_t *pdata) 
 {
   uint8_t size = 0;
@@ -26,7 +36,7 @@ void Usart1SendData_DMA(uint8_t *pdata)
     size++;
     pdata++;
   }
-  HAL_UART_Transmit_DMA(&huart1, Uart1_TransmitBuffer, size);
+  HAL_UART_Transmit_IT(&huart1, Uart1_TransmitBuffer, size);
 }
 //函数定义function definetion//
 void hex_to_char(uint8_t *p,uint8_t indata)
@@ -62,34 +72,23 @@ char char_to_bcd(char indata1,char indata2)
 ///....................
 void BT_Send_Command(uint8_t cmd)
 {
-//	switch(cmd)
-//	{
-//		
-//	}
 }	
-///end void BlueMode_Receive(void)
 
-///start void BlueMode_Receive(void)
-///....................(功能说明)
-///....................
+uint8_t Uart1_RX_Count=0;
 void BlueMode_Receive(void)
 {
-	uint8_t Uart1_RX_LEN;
+	 while(mPtr_Receive!=sPtr_Receive)
+	 {
+	  Uart1_RX_Timeout=10;
+	  BT_ReceiveBuffer[Uart1_RX_Count++]=Uart1_ReceiveBuffer[sPtr_Receive];
+	  //Uart1_ReceiveBuffer[sPtr_Receive]=0x00;
+	  if(++sPtr_Receive>=(RECEIVELEN))
+	   sPtr_Receive=0;
+     }	
 	if(Uart1_RX_Timeout != 0)
-	{//在中断里面置为3，并且前提是有空闲中断发生，空闲中断发生的原因是接收数据结束，
-	 //IT从busy进入空闲，出发了IDLE(空闲中断))	
+	{
 		if(--Uart1_RX_Timeout==0)
 		{
-    		HAL_UART_DMAStop(&huart1);
-			Uart1_RX_LEN=RECEIVELEN - huart1.hdmarx->Instance->CNDTR;
-			memset(BT_ReceiveBuffer,0,sizeof(BT_ReceiveBuffer));
-			for(uint8_t i=0;i<Uart1_RX_LEN;i++)
-				BT_ReceiveBuffer[i]=Uart1_ReceiveBuffer[i];
-			memset(Uart1_ReceiveBuffer,0,sizeof(Uart1_ReceiveBuffer));
-	        if (HAL_UART_Receive_DMA(&huart1,(uint8_t *)Uart1_ReceiveBuffer, RECEIVELEN) != HAL_OK)
-	        {
-		     _Error_Handler(__FILE__, __LINE__);
-	        }
 			if((BT_ReceiveBuffer[0]=='B')&&(BT_ReceiveBuffer[1]=='0')&&(BT_ReceiveBuffer[2]=='0')&&(BT_ReceiveBuffer[3]=='5'))
 			{//按键传过来B005x
 				//enUart_Send=0;
@@ -109,8 +108,12 @@ void BlueMode_Receive(void)
 					FireSize1=MODE4_FLASHING;
 				return;
 			}
+			Uart1_RX_Count=0;
+			//memset(BT_ReceiveBuffer,0,sizeof(BT_ReceiveBuffer));
 		}
 	}
+	else Uart1_RX_Count=0;
+   
 }
 ///end void BlueMode_Receive(void)
 

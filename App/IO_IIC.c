@@ -6,8 +6,8 @@ void Delay_1us(u8 t_data)
 {
 	for(;t_data>0;t_data--);
 	for(;t_data>0;t_data--);
-	for(;t_data>0;t_data--);
-	for(;t_data>0;t_data--);	
+//	for(;t_data>0;t_data--);
+//	for(;t_data>0;t_data--);	
 }
 
 void IIC_Init1(void)  

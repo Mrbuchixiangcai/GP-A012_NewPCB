@@ -2733,7 +2733,7 @@ HAL_StatusTypeDef UART_EndTransmit_IT(UART_HandleTypeDef *huart)
   * @retval HAL status
   */
 HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart)
-{
+{ extern HAL_StatusTypeDef User_UART_Receive_IT(UART_HandleTypeDef *huart);
   uint16_t* tmp;
   uint16_t  uhMask = huart->Mask;
   uint16_t  uhdata;
@@ -2749,30 +2749,30 @@ HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart)
       huart->pRxBuffPtr +=2U;
     }
     else
-    {
-      *huart->pRxBuffPtr++ = (uint8_t)(uhdata & (uint8_t)uhMask);
+    {User_UART_Receive_IT(huart);
+//      *huart->pRxBuffPtr++ = (uint8_t)(uhdata & (uint8_t)uhMask);
     }
 
-    if(--huart->RxXferCount == 0U)
-    {
-      /* Disable the UART Parity Error Interrupt and RXNE interrupt*/
-      CLEAR_BIT(huart->Instance->CR1, (USART_CR1_RXNEIE | USART_CR1_PEIE));
+//    if(--huart->RxXferCount == 0U)
+//    {
+//      /* Disable the UART Parity Error Interrupt and RXNE interrupt*/
+//      CLEAR_BIT(huart->Instance->CR1, (USART_CR1_RXNEIE | USART_CR1_PEIE));
 
-      /* Disable the UART Error Interrupt: (Frame error, noise error, overrun error) */
-      CLEAR_BIT(huart->Instance->CR3, USART_CR3_EIE);
+//      /* Disable the UART Error Interrupt: (Frame error, noise error, overrun error) */
+//      CLEAR_BIT(huart->Instance->CR3, USART_CR3_EIE);
 
-      /* Rx process is completed, restore huart->RxState to Ready */
-      huart->RxState = HAL_UART_STATE_READY;
+//      /* Rx process is completed, restore huart->RxState to Ready */
+//      huart->RxState = HAL_UART_STATE_READY;
 
-      HAL_UART_RxCpltCallback(huart);
+//      HAL_UART_RxCpltCallback(huart);
 
-      return HAL_OK;
-    }
+//      return HAL_OK;
+//    }
 
     return HAL_OK;
   }
   else
-  {
+  {User_UART_Receive_IT(huart);
     /* Clear RXNE interrupt flag */
     __HAL_UART_SEND_REQ(huart, UART_RXDATA_FLUSH_REQUEST);
 

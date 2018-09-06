@@ -74,7 +74,8 @@ typedef unsigned        int  uint32_t;
 #define  IIC_SDA12(a) if(a)    					\
 						GPIOA->BSRR=GPIO_PIN_12;\
 					 else     					\
-						GPIOA->BRR=GPIO_PIN_12				 
+						GPIOA->BRR=GPIO_PIN_12
+
 					 
 		
 					 

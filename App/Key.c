@@ -175,22 +175,22 @@ void KeyComMsg(void)
 				if(PlayMode==PLAY_BT)
 				{
 					
-					if(keyNum==0)
+					if(FireSize1==MODE0_OFF_FIRE)
 					{	
 						FireSize1=MODE1_SMALL_FIRE1;
 						keyNum=1;
 					}
-					else if(keyNum==1)
+					else if(FireSize1==MODE1_SMALL_FIRE1)
 					{	
 						FireSize1=MODE3_BIG_FIRE1;
 						keyNum=2;
 					}
-					else if(keyNum==2)
+					else if(FireSize1==MODE3_BIG_FIRE1)
 					{	
 						FireSize1=MODE4_FLASHING;
 						keyNum=3;
 					}
-					else if(keyNum==3)
+					else //if(keyNum==3)
 					{	
 						FireSize1=MODE0_OFF_FIRE;
 						if(keyBT==1)
@@ -203,7 +203,7 @@ void KeyComMsg(void)
 				else if(PlayMode==PLAY_ON)//蓝牙关机情况打开lihgt，只有小火和关闭两种情况
 				{
 					//PlayMode=PLAY_ON;
-					if(keyNum==0)
+					if(FireSize1==MODE0_OFF_FIRE)
 					{	
 						FireSize1=MODE1_SMALL_FIRE1;
 						keyNum=1;
@@ -219,9 +219,9 @@ void KeyComMsg(void)
 				enUart_Send=1;
 				if(cntUart_Send==600)
 				{
-				 enUart_Send=0;	
-				 cntUart_Send=0;	
-				 Usart1SendData_DMA(&SPASongs_Num_Table[keyNum][0]);
+					enUart_Send=0;	
+					cntUart_Send=0;	
+					Usart1SendData_DMA(&SPASongs_Num_Table[FireSize1][0]);
 				}					
 				break;
 			}
@@ -237,17 +237,17 @@ void KeyComMsg(void)
 			}
 		}
 	}
- if(enUart_Send)
- {	
-  if(++cntUart_Send>600)
-  {	 
-   enUart_Send=0;  
-   cntUart_Send=0;	  
-   Usart1SendData_DMA(&SPASongs_Num_Table[keyNum][0]);
-  }	  
- }
- else if(cntUart_Send<600)
-  cntUart_Send++;	 
+	if(enUart_Send)
+	{	
+		if(++cntUart_Send>600)
+		{	 
+			enUart_Send=0;  
+			cntUart_Send=0;	  
+			Usart1SendData_DMA(&SPASongs_Num_Table[FireSize1][0]);
+		}	  
+	}
+	else if(cntUart_Send<600)
+		cntUart_Send++;	 
 }
 
 

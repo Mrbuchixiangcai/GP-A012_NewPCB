@@ -47,7 +47,7 @@ u8  xxxx;
 u8  yyyy;
 void SN3236_Driver()
 {
-	u8 i;
+//	u8 i;
 //	for(i=0;i<36;i++)
 //		SN3236_Pwm2_1[i]=0x00;
 //	for(i=0;i<36;i++)
