@@ -38,33 +38,9 @@ enum
 	T_LIGHT    ,
 };
 
-//变量定义variable definition//
 
-
-//标志位定义flags definetion//
-
-
-//函数定义function definetion//
-
-//外部调用_宏定义macro definition//
-
-
-//外部调用_类型定义byte definition//
-
-
-//外部调用_变量定义variable definition//
-extern uint8_t   keyNum;
-
-//外部调用_标志位定义flags definetion//
-
-
-//外部调用_函数定义function definetion//
 extern void    KeyScan(void);
 extern void    KeyComMsg(void);
-extern uint8_t GetVoltageValue(void);
-
-
-
 
 #endif
 

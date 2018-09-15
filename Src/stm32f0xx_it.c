@@ -116,7 +116,7 @@ void SysTick_Handler(void)
   HAL_SYSTICK_IRQHandler();
   /* USER CODE BEGIN SysTick_IRQn 1 */
 	AppTick1ms=1;
-	if(++cntAppTick>=6)
+	if(++cntAppTick>=10)
 		cntAppTick=0;
 	if(cntAppTick==0)
 		AppTick0=1;
@@ -148,7 +148,7 @@ void DMA1_Channel1_IRQHandler(void)
   /* USER CODE END DMA1_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_adc);
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
- DMA_interrupt_flag=1;
+ Adc_Dma_Irq_f=1;
   /* USER CODE END DMA1_Channel1_IRQn 1 */
 }
 

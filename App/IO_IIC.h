@@ -99,11 +99,10 @@ typedef unsigned        int  uint32_t;
 
 //函数定义function definetion//
 //IIC所有操作函数
-void Delay_1us(u8 t_data);
-void IIC_Init1(void);        	   
-void IIC_Start1(void);			 	  
-void IIC_Stop1(void);				  
-void IIC_Send_Byte1(u8 txd);   
+void Delay_1us(u8 t_data);     	   
+void IIC_Start(void);			 	  
+void IIC_Stop(void);				  
+void IIC_Send_Byte(u8 txd);   
 void IIC_Send_Byte_Mix(u8 p);
 u8   IIC_Wait_Ack(void);
 #endif

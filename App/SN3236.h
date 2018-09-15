@@ -9,18 +9,10 @@
 #define REG_26H_PWM_CONTROL    0x26
 #define REG_4AH_GLOBAL_CONTROL 0x4A
 
-extern u8 SN3236_Pwm1_1[36];//一面灯光有两个3236芯片控制
-extern u8 SN3236_Pwm1_2[36];
 extern u8 SN3236_Pwm2_1[36];
 extern u8 SN3236_Pwm2_2[36];
-extern u8 SN3236_Pwm3_1[36];
-extern u8 SN3236_Pwm3_2[36];
-extern u8 SN3236_Pwm4_1[36];
-extern u8 SN3236_Pwm4_2[36];
 extern u8 SN3236_RegBuffer[0x4B];
-void SN3236_Init1(void);
 void SN3236_Driver(void);
-void SN3236_Clearing(void);
 
 #endif
 

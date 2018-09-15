@@ -216,7 +216,14 @@ static void MX_ADC_Init(void)
   {
     _Error_Handler(__FILE__, __LINE__);
   }
-
+  if(HAL_ADCEx_Calibration_Start (&hadc) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+  if (HAL_ADC_Start_DMA(&hadc, (uint32_t*)AdcDma_Buf, ADC_SIZE) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
 }
 
 /* USART1 init function */
