@@ -10,7 +10,7 @@
       <TargetName>GP-A012</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060422::V5.06 update 4 (build 422)::ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -501,24 +501,9 @@
               <FilePath>..\App\h_adc.c</FilePath>
             </File>
             <File>
-              <FileName>IO_IIC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\App\IO_IIC.c</FilePath>
-            </File>
-            <File>
               <FileName>Key.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\App\Key.c</FilePath>
-            </File>
-            <File>
-              <FileName>rgb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\App\rgb.c</FilePath>
-            </File>
-            <File>
-              <FileName>SN3236.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\App\SN3236.c</FilePath>
             </File>
             <File>
               <FileName>big_fire.c</FileName>
@@ -536,19 +521,24 @@
               <FilePath>..\App\music_fire.c</FilePath>
             </File>
             <File>
-              <FileName>s_big_fire.c</FileName>
+              <FileName>led_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\s_big_fire.c</FilePath>
+              <FilePath>..\App\led_driver.c</FilePath>
             </File>
             <File>
-              <FileName>s_follow_wind_fire.c</FileName>
+              <FileName>level_fire.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\s_follow_wind_fire.c</FilePath>
+              <FilePath>..\App\level_fire.c</FilePath>
             </File>
             <File>
-              <FileName>s_small_fire.c</FileName>
+              <FileName>middle_fire.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\App\s_small_fire.c</FilePath>
+              <FilePath>..\App\middle_fire.c</FilePath>
+            </File>
+            <File>
+              <FileName>wind_fire.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\App\wind_fire.c</FilePath>
             </File>
           </Files>
         </Group>

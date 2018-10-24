@@ -2733,11 +2733,11 @@ HAL_StatusTypeDef UART_EndTransmit_IT(UART_HandleTypeDef *huart)
   * @retval HAL status
   */
 HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart)
-{ extern HAL_StatusTypeDef User_UART_Receive_IT(UART_HandleTypeDef *huart);
+{
   uint16_t* tmp;
   uint16_t  uhMask = huart->Mask;
   uint16_t  uhdata;
-
+  extern HAL_StatusTypeDef User_UART_Receive_IT(uint8_t rx_data);
   /* Check that a Rx process is ongoing */
   if(huart->RxState == HAL_UART_STATE_BUSY_RX)
   {
@@ -2749,8 +2749,9 @@ HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart)
       huart->pRxBuffPtr +=2U;
     }
     else
-    {User_UART_Receive_IT(huart);
-//      *huart->pRxBuffPtr++ = (uint8_t)(uhdata & (uint8_t)uhMask);
+    {
+      //*huart->pRxBuffPtr++ = (uint8_t)(uhdata & (uint8_t)uhMask);
+	  User_UART_Receive_IT((uint8_t)(uhdata & (uint8_t)uhMask));	
     }
 
 //    if(--huart->RxXferCount == 0U)
@@ -2772,7 +2773,7 @@ HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart)
     return HAL_OK;
   }
   else
-  {User_UART_Receive_IT(huart);
+  {
     /* Clear RXNE interrupt flag */
     __HAL_UART_SEND_REQ(huart, UART_RXDATA_FLUSH_REQUEST);
 

@@ -36,7 +36,7 @@
 #include "stm32f0xx_it.h"
 
 /* USER CODE BEGIN 0 */
-#include "app_main.h"
+
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -110,24 +110,41 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-
+  static uint8_t   cntTick;
   /* USER CODE END SysTick_IRQn 0 */
-  HAL_IncTick();
-  HAL_SYSTICK_IRQHandler();
+
   /* USER CODE BEGIN SysTick_IRQn 1 */
-	AppTick1ms=1;
-	if(++cntAppTick>=10)
-		cntAppTick=0;
-	if(cntAppTick==0)
-		AppTick0=1;
-	if(cntAppTick==1)
-		AppTick1=1;
-	if(cntAppTick==2)
-		AppTick2=1;
-	if(cntAppTick==3)
-		AppTick3=1;
-	if(cntAppTick==5)
-		AppTick5=1;
+  extern uint8_t   cntAppTick;
+  extern uint8_t   AppTick1ms;
+  extern uint8_t   AppTick0;
+  extern uint8_t   AppTick1;
+  extern uint8_t   AppTick2;
+  extern uint8_t   AppTick3;
+  extern uint8_t   AppTick4;
+  extern uint8_t   AppTick5;
+  extern void ADC_GetBuffer(void); 	
+  extern void MC96F6508A_driver(void);	
+  ADC_GetBuffer();	
+  MC96F6508A_driver();
+  if(++cntTick>=10)
+  {	 
+   cntTick=0;	  
+   HAL_IncTick();
+   HAL_SYSTICK_IRQHandler();//ADC_GetBuffer();		  
+   if(++cntAppTick>=10)
+	cntAppTick=0;
+   if(cntAppTick==0)
+	AppTick0=1;
+   if(cntAppTick==2)
+	AppTick1=1;
+   if(cntAppTick==4)
+	AppTick2=1;
+   if(cntAppTick==6)
+	AppTick3=1;
+   if(cntAppTick==8)
+	AppTick5=1;
+   AppTick1ms=1;
+  }  
   /* USER CODE END SysTick_IRQn 1 */
 }
 
@@ -148,7 +165,8 @@ void DMA1_Channel1_IRQHandler(void)
   /* USER CODE END DMA1_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_adc);
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
- Adc_Dma_Irq_f=1;
+  extern uint8_t  Adc_Dma_Irq_f;	
+  Adc_Dma_Irq_f=1; 
   /* USER CODE END DMA1_Channel1_IRQn 1 */
 }
 

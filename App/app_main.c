@@ -8,44 +8,52 @@ uint8_t   AppTick2;
 uint8_t   AppTick3;
 uint8_t   AppTick4;
 uint8_t   AppTick5;
-uint8_t   brightness1;
-uint8_t   electricityBrightness;
 PLAY_MODE PlayMode; 
-FIRE_SIZE FireMode;
-
+FIRE_MODE FireMode;
+FIRE_MODE FireMode_c;
 void PowerON_Reset(void)
 {
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET);
-	brightness1 = 2;
-	electricityBrightness=0x07;
-	FireMode = MODE0_OFF_FIRE;
-	PlayMode = PLAY_ON;
-	HAL_UART_Receive_IT(&huart1, Uart1_ReceiveBuffer, RECEIVELEN);	
+ PlayMode = PLAY_ON;	
+ FireMode = FIRE_OFF;
+ HAL_UART_Receive_IT(&huart1, Uart1_ReceiveBuffer, RECEIVELEN);	
+ if (HAL_ADC_Start_DMA(&hadc, (uint32_t*)AdcDma_Buf,ADC_DMA_SIZE) != HAL_OK)
+ {
+    _Error_Handler(__FILE__, __LINE__);
+ }
 }
-
 
 void Scan_ONOFF(void)
 {
  static uint8_t  BTPower_c;	
+ GPIO_InitTypeDef GPIO_InitStruct;	
  if(BTPower() != BTPower_c)
  {
-	BTPower_c = BTPower();
-	if (BTPower())
-		PlayMode = PLAY_BT;
-	else
-	{
-		PlayMode = PLAY_OFF;
-		FireMode = MODE0_OFF_FIRE;
-	}
+  BTPower_c = BTPower();
+  if (BTPower())
+  {
+   PlayMode = PLAY_BT;
+   GPIO_InitStruct.Pin = GPIO_PIN_15;
+   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+   GPIO_InitStruct.Pull = GPIO_NOPULL;
+   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  }
+  else
+  {
+   PlayMode = PLAY_OFF;
+   FireMode = FIRE_OFF;
+   GPIO_InitStruct.Pin = GPIO_PIN_15;
+   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+   GPIO_InitStruct.Pull = GPIO_NOPULL;
+   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  }
  }
- if((!KEY_LIGHT()) || (BTPower()) || (PlayMode != PLAY_OFF))
+ if(FireMode == FIRE_OFF)
  {
-	POWER_LED(1);
+  POWER_LED(0);
  }
- if(PlayMode == PLAY_OFF)
+ else
  {
-	FireMode = MODE0_OFF_FIRE;
-	POWER_LED(0);
+  POWER_LED(1);
  }
 }
 
@@ -53,41 +61,38 @@ void Scan_ONOFF(void)
 void app_main(void)
 {
 	PowerON_Reset();
-	
-
 	while (1)
-	{
-		if (AppTick1ms)
-		{
-			AppTick1ms = 0;
-            ADC_GetBuffer();
-			
-			//ÒôÁ¿É¨Ãè
-			volume_scan(VOLUME_STEP);
-			
-			Scan_ONOFF();
-		}
-		if (AppTick0)
-		{
-			AppTick0 = 0;
-			KeyScan();
-			KeyComMsg();
-		}
-		if (AppTick1)
-		{
-			AppTick1 = 0;
-			BlueMode_Handle();
-		}
-		if (AppTick2)
-		{
-			AppTick2 = 0;
-			FireMode_Handle();
-		}
-		if (AppTick3)
-		{
-			AppTick3 = 0;
-		    SN3236_Driver();
-		}
+	{		
+	 if (AppTick1ms)
+	 {
+	  AppTick1ms=0;
+	  BlueMode_Handle();
+	 }
+	 if (AppTick0)
+	 {
+	  AppTick0=0;		
+	  KeyScan();
+	  KeyComMsg();
+	  Scan_ONOFF();
+	 }
+	 if (AppTick1)
+	 {
+	  AppTick1=0;
+	  Audio_Average();
+	 }
+	 if (AppTick2)
+	 {
+	  AppTick2=0;
+	 }
+	 if (AppTick3)
+	 {
+	  AppTick3  =0;
+	  send_index=0;
+	  send_enable=1;		
+	  FireMode_Handle();     
+	  //GPIOA->BSRR = GPIO_PIN_7;   			 
+	  //GPIOA->BRR  = GPIO_PIN_7;//40us			
+	 }
 	}
 }
 

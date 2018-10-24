@@ -1,23 +1,17 @@
 #ifndef  __APP_MAIN_H__
 #define  __APP_MAIN_H__
-
-//Í·ÎÄ¼þheader file//
-#include "main.h"
 #include "stm32f0xx_hal.h"
 #include <string.h>
-#include "h_adc.h"
-#include "h_led.h"
-#include "bt_mode.h"
-#include "rgb.h"
-#include "IO_IIC.h"
-#include "SN3236.h"// 
 #include "Key.h"
+#include "h_adc.h"
+#include "bt_mode.h"
+#include "led_driver.h"
 #include "big_fire.h"
+#include "middle_fire.h"
 #include "small_fire.h"
-#include "music_fire.h "
-#include "s_small_fire.h"
-#include "s_big_fire.h"
-#include "s_follow_wind_fire.h "
+#include "music_fire.h"
+#include "wind_fire.h"
+#include "level_fire.h"
 typedef unsigned         char uint8_t;
 typedef unsigned short   int  uint16_t;
 typedef unsigned         int  uint32_t;
@@ -45,17 +39,15 @@ extern UART_HandleTypeDef huart1;
 
 typedef enum
 {
-	MODE0_OFF_FIRE   =0,
-	MODE1_SMALL_FIRE1  ,
-//	H_SMALL_FIRE1  ,
-	MODE3_BIG_FIRE1    ,
-//	H_BIG_FIRE1    ,
-	FOLLOW_WIND  	   ,
-	MODE4_PULSATE_MUSIC,
-	MUSIC_PULSE_FLASH  ,
-	MUSIC_PULSE_FLASH_2,
-}FIRE_SIZE;
-#define FIRE_SIZE_MAX  MUSIC_PULSE_FLASH_2
+	FIRE_OFF   =0,
+	FIRE_SMALL   ,
+	FIRE_MIDDLE  ,
+	FIRE_BIG     ,
+	FIRE_WIND  	 ,
+	FIRE_MUSIC   ,	
+	FIRE_LEVEL   ,
+}FIRE_MODE;
+#define FIRE_MODE_MAX  FIRE_LEVEL
 
 typedef enum
 {
@@ -74,11 +66,9 @@ extern uint8_t   AppTick2;
 extern uint8_t   AppTick3;
 extern uint8_t   AppTick4;
 extern uint8_t   AppTick5;
-extern uint8_t   brightness1;
-extern uint8_t   electricityBrightness;
 extern PLAY_MODE PlayMode; 
-extern FIRE_SIZE FireMode;
-
+extern FIRE_MODE FireMode;
+extern FIRE_MODE FireMode_c;
 
 extern void app_main(void);
 

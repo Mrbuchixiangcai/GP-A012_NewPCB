@@ -8,16 +8,27 @@ uint8_t  BT_ReceiveBuffer[RECEIVELEN];
 uint8_t  Uart1_ReceiveBuffer[RECEIVELEN];
 uint8_t  Uart1_TransmitBuffer[RECEIVELEN];
 
-
-
-HAL_StatusTypeDef User_UART_Receive_IT(UART_HandleTypeDef *huart)
+uint8_t page;		
+HAL_StatusTypeDef User_UART_Receive_IT(uint8_t rx_data)
 {
-  uint16_t uhMask = huart->Mask;
-	Uart1_ReceiveBuffer[mPtr_Receive]=(uint8_t)(huart->Instance->RDR & (uint8_t)uhMask);
-	if(++mPtr_Receive>=(RECEIVELEN))
-		mPtr_Receive=0;
-	Uart1_RX_Timeout=10;
+  Uart1_ReceiveBuffer[mPtr_Receive]=rx_data;
+  if(++mPtr_Receive>=(RECEIVELEN))
+   mPtr_Receive=0;
+  Uart1_RX_Timeout=10;
   return HAL_OK;
+		 
+//  if(rx_data>=0x20)
+//  {
+//   page=rx_data-0x20;
+//   Wind_index_max=page+1;  
+//   mPtr_Receive=0;    
+//  }
+//  else
+//  {
+////   Small_Fire_tab_array1[page][mPtr_Receive/5][mPtr_Receive%5]=rx_data; 
+//   mPtr_Receive++;  
+//  }		
+//  return HAL_OK;	
 }
 void Usart1SendData(uint8_t *pdata) 
 {
@@ -31,35 +42,6 @@ void Usart1SendData(uint8_t *pdata)
   }
   HAL_UART_Transmit_IT(&huart1, Uart1_TransmitBuffer, size);
 }
-
-//void hex_to_char(uint8_t *p,uint8_t indata)
-//{
-//	uint8_t tmp;
-//	tmp=indata>>4;
-//	if(tmp>=0x0A)
-//	 *p=((tmp-0x0A)+'A'); 
-//	else
-//	 *p=(tmp+'0');
-//	p++;
-//	tmp=indata&0x0F;
-//	if(tmp>=0x0A)
-//		*p=((tmp-0x0A)+'A'); 
-//	else
-//		*p=(tmp+'0');
-//}
-//char char_to_bcd(char indata1,char indata2)
-//{
-//	if(indata1>='A')
-//		indata1=((indata1-'A')+0x0A);
-//	else
-//		indata1=(indata1-'0');
-//	if(indata2>='A')
-//		indata2=((indata2-'A')+0x0A);
-//	else
-//		indata2=(indata2-'0');
-//	return (indata1*10+indata2);
-//}
-
 
 void BlueMode_Receive(void)
 {
@@ -80,25 +62,41 @@ void BlueMode_Receive(void)
    {//按键传过来B005x //enUart_Send=0;
 	if(BT_ReceiveBuffer[4]=='0')
 	{
-	 FireMode=MODE0_OFF_FIRE;
+	 FireMode=FIRE_OFF;
 	 if((HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_0))==1)
 	  PlayMode=PLAY_BT;
 	 else
 	  PlayMode=PLAY_OFF;
 	}
 	else if(BT_ReceiveBuffer[4]=='1')
-	 FireMode=MODE1_SMALL_FIRE1;
+	 FireMode=FIRE_SMALL;
 	else if(BT_ReceiveBuffer[4]=='2')
-	 FireMode=MODE3_BIG_FIRE1;
+	 FireMode=FIRE_MIDDLE;
 	else if(BT_ReceiveBuffer[4]=='3')
-	 FireMode=FOLLOW_WIND;
+	 FireMode=FIRE_BIG;
 	else if(BT_ReceiveBuffer[4]=='4')
-	 FireMode=MODE4_PULSATE_MUSIC;
+	 FireMode=FIRE_WIND;
 	else if(BT_ReceiveBuffer[4]=='5')
-	 FireMode=MUSIC_PULSE_FLASH;
+	 FireMode=FIRE_MUSIC;
 	else if(BT_ReceiveBuffer[4]=='6')
-	 FireMode=MUSIC_PULSE_FLASH_2;
+	 FireMode=FIRE_LEVEL;
 	return;
+   }
+   if ((BT_ReceiveBuffer[0] == 'I') && (BT_ReceiveBuffer[1] == 'I'))
+   {
+	PlayMode=PLAY_BT;
+   }
+   else if ((BT_ReceiveBuffer[0] == 'I') && (BT_ReceiveBuffer[1] == 'A'))
+   {
+	PlayMode=PLAY_BT;
+   }
+   else if ((BT_ReceiveBuffer[0] == 'O') && (BT_ReceiveBuffer[1] == 'F'))
+   {
+	PlayMode=PLAY_OFF;
+   }
+   else if ((BT_ReceiveBuffer[0] == 'O') && (BT_ReceiveBuffer[1] == 'N'))
+   {
+	PlayMode=PLAY_BT;
    }
    ptrReceive=0;
    memset(BT_ReceiveBuffer,0,sizeof(BT_ReceiveBuffer));

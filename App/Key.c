@@ -8,11 +8,6 @@ uint8_t   KeyEvent;       //按键事件
 uint8_t   cntKeyLoop;     //计数按键循环，短按，长按，超长按的按下时间
 uint8_t   cntKeyLong;     //按键按下时间计数，可用于长按键和其他
 
-
-
-
-
-
 uint8_t SyncNum_Table[7][6]= 
 {
 	"B0050\n", //关灯光
@@ -102,90 +97,53 @@ void KeyEventPorc(uint8_t KeyTmp)
 //被主函数调用
 void KeyScan(void)
 {
-	KeyEventPorc(GetKeyValue());
-	
+	KeyEventPorc(GetKeyValue());	
 }
 
 //按键处理
 void KeyComMsg(void)
 {
-	static uint16_t  cntUart_Send=0;
-	if(gbKeyPress)
-	{
-		if(PlayMode==PLAY_OFF)
-			PlayMode=PLAY_ON;
-		switch(KeyValue)
-		{
-//			case KU(T_BT_POWER):
-//			{}
-//			case KLU(T_BT_POWER):
-//			{
-//				if(cntKeyLong>=10)
-//					break;
-//				PlayMode=PLAY_BT;
-//				break;
-//			}
-			case KU(T_LIGHT): 
-			{
-				if(PlayMode==PLAY_BT)
-				{
-					FireMode++;
-					if(FireMode>FIRE_SIZE_MAX)
-						FireMode=MODE0_OFF_FIRE;
-					if(FireMode == MODE0_OFF_FIRE)
-					{
-						if(BTPower())
-							PlayMode=PLAY_BT;
-						else
-							PlayMode=PLAY_OFF;
-					}
-				}
-				else if(PlayMode==PLAY_ON)//蓝牙关机情况打开lihgt，只有小火和关闭两种情况
-				{
-					//PlayMode=PLAY_ON;
-					if(FireMode==MODE0_OFF_FIRE)
-					{	
-						FireMode=MODE1_SMALL_FIRE1;
-						
-					}
-					else
-					{	
-						FireMode=MODE0_OFF_FIRE;
-						PlayMode=PLAY_OFF;
-					}
-				}
-				enUart_Send=1;
-				if(cntUart_Send==600)
-				{
-					enUart_Send=0;	
-					cntUart_Send=0;	
-					Usart1SendData(&SyncNum_Table[FireMode][0]);
-				}					
-				break;
-			}
-			case KLU(T_LIGHT):
-			{
-				if (cntKeyLong >= 50) 
-					break;
-				if(brightness1==1)
-					brightness1=3;
-				else
-					brightness1=1;
-				break;
-			}
-		}
-	}
-	if(enUart_Send)
-	{	
-		if(++cntUart_Send>600)
-		{	 
-			enUart_Send=0;  
-			cntUart_Send=0;	  
-			Usart1SendData(&SyncNum_Table[FireMode][0]);
-		}	  
-	}
-	else if(cntUart_Send<600)
-		cntUart_Send++;	 
+ static uint16_t  cntUart_Send=0;
+ if(gbKeyPress)
+ {
+  switch(KeyValue)
+  {
+   case KD(T_LIGHT): 
+   {
+    if(PlayMode==PLAY_BT)
+    {
+     if(++FireMode>FIRE_MODE_MAX)
+	  FireMode=FIRE_OFF;
+    }
+    else 
+    {
+     if(FireMode==FIRE_OFF)
+	  FireMode=FIRE_SMALL;
+     else
+	  FireMode=FIRE_OFF;
+    }
+    enUart_Send=1;
+    if(cntUart_Send>=600)
+    {
+	 enUart_Send=0;	
+	 cntUart_Send=0;	
+	 Usart1SendData(&SyncNum_Table[FireMode][0]);
+    }					
+    break;
+   }
+  }
+ }
+ if(enUart_Send)
+ {	
+  if(++cntUart_Send>600)
+  {	 
+   enUart_Send=0;  
+   cntUart_Send=0;	  
+   Usart1SendData(&SyncNum_Table[FireMode][0]);
+  }	  
+ }
+ else if(cntUart_Send<600)
+  cntUart_Send++;	 
 }
 
 

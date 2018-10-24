@@ -1,481 +1,358 @@
 //头文件header file//
 #include "app_main.h"
-
-
-ledTypeDef 		grb_led[LED_ROWS][LED_COLUMNS];//----灯数组
-
-freqTypeDef		freqer[SAV_LENGH];//-----------------------频率结构体变量
-
-uint8_t const Music_Fire_tab[120][6][10]={  \
+uint16_t mMusic_Map_Tab[6][10];
+uint16_t sMusic_Map_Tab[6][10];
+uint16_t cntMusic_none;		
+void MusicMode_AudioDeal(void)
 {
-// L   H    L    H    L    H    L    H    L    H	
-  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-},                                                 
- 
-};
-//
-
-
-/*************************************************************************\
- *   Function name   : user_freq(自定义频率器)                            				
- *   Returns 	  	   : Time_State(TIME_UP时间到/NOT_REACHED未到达)                                              	
- *   Parameters      : *freq(频率结构体指针)                                             	
- *   Purpose         : 每计数period次执行一次                     		
-\*************************************************************************/
-Time_State user_freq(freqTypeDef *freq)
-{
-	
-	(*freq).count ++;
-	
-	if((*freq).count>=(*freq).period )
-	{
-		(*freq).count=0;
-	}
-	//
-	
-	if((*freq).count==0)
-	{
-		
-		return (TIME_UP);
-	}
-	//
-	
-	else
-	{
-		return (NOT_REACHED);
-	}
-	//
-}
-//
-
-
-void write_all_led(void)
-{
-	extern uint8_t  Fire_Data[6][10]; 
-	
-	//C89规定局部变量的声明必须在开头
-	uint8_t i,j;
-	
-	for(i=0;i<LED_ROWS;i++)
-	{
-		
-		for(j=0;j<LED_COLUMNS;j++)
-		{
-
-			Fire_Data[i][j]=grb_led [LED_ROWS-1-i][j].brightness;
-		}
-	}
-}
-//
-
-//设置亮度（传参亮度）
-void set_brightness(uint8_t p,uint8_t brightness)
-{
-	
-	//C89规定局部变量的声明必须在开头
-	uint8_t i;
-	
-	for(i=0;i<LED_ROWS;i++)
-	{
-
-			grb_led [i][p].brightness=brightness;
-	}
-}
-//
-
-//设置速度
-void set_speed(uint8_t p)
-{
-	
-	//当前音量变小，慢节奏
-	if(volume_save[p]<volume.average )
-	{
-		
-		//更新计数周期
-		freqer[p].period=7*(VOLUME_STEP-abs(pulse_volume[p].max-volume_save[p]));
-	}
-	//
-	
-//	//当前音量不变，中节奏
-//	else if(volume_save[p]==volume.average )
-//	{
-//		
-//		//更新计数周期
-//		freqer[p].period=4*(VOLUME_STEP-abs(pulse_volume[p].max-volume_save[p]));
-//	}
-//	//
-		
-	//当前音量变大，快节奏
-	else
-	{
-		
-		//更新计数周期
-		freqer[p].period=(VOLUME_STEP-abs(pulse_volume[p].max-volume_save[p]));
-	}
-	//
-}
-//
-
-
-//音量计数器
-void volume_counter(uint8_t p)
-{
-	
-	//C89规定局部变量的声明必须在开头
-	uint8_t i;
-	
-	//当前音量非静音
-	if((volume_save[p] != VOLUME_MUTE))
-	{
-	
-		//脉冲往上
-		if((pulse_volume[p].count)<(pulse_volume[p].max))
-		{
-			
-			//当前音量大于上限音量值
-			if(volume_save[p]>(pulse_volume[p].max))
-			{
-				
-				//设置速度
-				set_speed(p);
-				
-				//更新上限值
-				(pulse_volume[p].max)=volume_save[p];
-			}
-			//
-			
-			//频率计数时间到
-			if(user_freq(&freqer[p])==TIME_UP)
-			{
-			
-				//点亮行计数加
-				(pulse_volume[p].count)++;
-				
-				//遍历行
-				for(i=0;i<LED_ROWS ;i++)
-				{
-
-					//设定亮度值
-					//grb_led[i][p].brightness =BRIGHTNESS_STEP*(pulse_volume[p].max)*(i<(pulse_volume[p].count));
-					grb_led[i][p].brightness =BRIGHTNESS_MAX*(i<(pulse_volume[p].count));
-				}
-				//
-				
-				//对所有LED写数据
-				write_all_led ();
-			}
-			//
-		}
-		//
-		
-		//脉冲往下
-		else if((pulse_volume[p].count)>(pulse_volume[p].max))
-		{
-			
-			//当前音量小于上限音量值
-			if(volume_save[p]<(pulse_volume[p].max))
-			{
-				
-				//设置速度
-				set_speed(p);
-				
-				//更新上限值
-				(pulse_volume[p].max)=volume_save[p];
-			}
-			//
-			
-			//频率计数时间到
-			if(user_freq(&freqer[p])==TIME_UP)
-			{
-			
-				//点亮行计数减
-				(pulse_volume[p].count)--;
-				
-				//遍历行前半部
-				for(i=0;i<LED_ROWS ;i++)
-				{
-
-					//设定亮度值
-					//grb_led[i][p].brightness =BRIGHTNESS_STEP*(pulse_volume[p].max)*(i<(pulse_volume[p].count));
-					grb_led[i][p].brightness =BRIGHTNESS_MAX*(i<(pulse_volume[p].count));
-
-				}
-				//
-				
-				//对所有LED写数据
-				write_all_led ();
-			}
-			//
-		}
-		//
-		
-		//脉冲到顶
-		else
-		{
-			
-			//设置速度
-			set_speed(p);
-			
-			//当前音量未发生变化
-			if(volume_save[p]==pulse_volume[p].max)
-			{
-				
-				if(volume_save[p]==LED_ROWS)
-				{
-					pulse_volume[p].max=volume_save[p]-3;
-				}
-				//
-			}
-			//
-			
-			//当前音量发生变化
-			else
-			{
-			
-				//更新上限值
-				(pulse_volume[p].max)=volume_save[p];
-				
-			}
-			//
-		}
-		//
-	}
-	//
-	
-	//静音
-	else //if(volume.current==VOLUME_MUTE)
-	{
-		
-		//频率计数时间到
-		if(user_freq(&freqer[p])==TIME_UP)
-		{
-		
-			//设定速度
-			freqer[p].period=16;
-			
-			//设定亮度和颜色
-			set_brightness(p,BRIGHTNESS_MUTE);
-			
-			//对所有LED写数据
-			write_all_led ();
-		}
-		//
-	}
-	//
-}
-//
-
-//脉冲跟随音量
-void pulse_follow_volume(void)//4
-{
-	
-	//C89规定局部变量的声明必须在开头
-	uint8_t i;
-
-	//遍历所有列
-	for(i=0;i<LED_COLUMNS;i++)
-	{
-		
-		//音量计数
-		volume_counter (i);
-	}
-	//
-}
-//4
-
-
-//脉冲跟随音量
-void pulse_follow_volume_2(void)//5
-{
-	
-	//C89规定局部变量的声明必须在开头
-	uint8_t i,j;
-
-	//遍历所有列
-	for(i=0;i<LED_COLUMNS;i++)
-	{
-		
-		if(i%LED_TEAM==0)
-		{
-			
-			//音量计数
-			volume_counter (i);
-		}
-		//
-		
-		//
-		else
-		{
-			
-			//遍历行
-			for(j=0;j<LED_ROWS;j++)
-			{
-				
-				//同组其余跟随前一个
-				grb_led [LED_ROWS-1-j][i].brightness=grb_led [LED_ROWS-1-j][i-1].brightness;
-			}
-			//
-			
-			//对所有LED写数据
-			write_all_led ();
-		}
-		//
-	}
-	//
-}
-//5
-
-/*******************************************************************************************/
-/*******************************************************************************************/ 
- u8 ptrMove; 
- u8 cntMoveSpeed;  
- const uint8_t RRC_MOVE_Tab[12] =
+ //uint8_t i,j;	
+ uint32_t _sum;		
+ uint16_t x,tmp_data;	
+ static uint8_t  y[10];	
+ for(_sum=0,x=0;x<10;x++)
  {
-  0,0,255,0,0,255,0,0,255,0,0,255,
- };
-extern const uint8_t Map_Addr_H[6][10];
-uint8_t music_speed_max;
-uint8_t music_speed_count;
-uint8_t big_small_flag;
-uint8_t small_index;	
-uint8_t big_index;	
+  _sum+=AdcAudio_Data[x];
+ }
+ _sum=_sum/10; 
+ if(_sum<=5) 
+ {
+  if(cntMusic_none<100)  
+   cntMusic_none++;
+ }
+ else if(_sum>=40) 
+ {
+  cntMusic_none=0;	
+ } 	
+ for(x=0;x<10;x++) 	
+ {	
+  tmp_data=AdcAudio_Data[x];	
+  if(tmp_data>mMusic_Map_Tab[y[x]][x])
+  {
+	sMusic_Map_Tab[y[x]][x]=tmp_data/3;///2;
+    if(y[x]>0)
+     y[x]--;
+    mMusic_Map_Tab[y[x]][x]=tmp_data;
+  }
+  else
+  {
+	sMusic_Map_Tab[y[x]][x]=0;  
+    if(y[x]<5)
+     y[x]++;
+    mMusic_Map_Tab[y[x]][x]=tmp_data;  
+	sMusic_Map_Tab[y[x]][x]=tmp_data;
+    if(((y[x]==5)||(y[x]==4))&&(sMusic_Map_Tab[y[x]][x]==0))
+	{
+	 if(y[x]==4)	
+	 sMusic_Map_Tab[y[x]][x]=1;	
+	 else
+	 sMusic_Map_Tab[y[x]][x]=2; 
+    }
+  } 	  
+ } 
  
+// for(x=0;x<10;x++)
+// {	
+//  for(i=0;i<(6-1);i++)
+//  {
+//   for(j=0;j<(6-i-1);j++)          
+//   {
+//    if(sMusic_Map_Tab[j][x]>sMusic_Map_Tab[j+1][x])   
+//    {
+//     tmp_data=sMusic_Map_Tab[j+1][x];
+//     sMusic_Map_Tab[j+1][x]=sMusic_Map_Tab[j][x];
+//     sMusic_Map_Tab[j][x]=tmp_data;      
+//    }                                
+//   }
+//  } 
+// }   
+}
+uint8_t  Fire_Data_H_temp[6][10]; 
 void Music_Fire_Mode(void)
 {
- u8 i,j;
-// static uint8_t speed;
-//	static uint8_t small_index;	
-//	static uint8_t big_index;	
-	
-	//静音
-	if(volume.current==VOLUME_MUTE)
-	{
-			for(i=0;i<6;i++)
-			{
-			 for(j=0;j<10;j++)
-				Fire_Data[i][j]=0;
-			} 
-		j=ptrMove;
-		for(i=0;i<10;i++)
-		{
-
-		 Fire_Data[5][i]=RRC_MOVE_Tab[j];
-		 if(++j>=12)
-			j=0;
-		}
-		if(++cntMoveSpeed>=50)
-		{
-		 cntMoveSpeed=0;	
-		 if(++ptrMove>=12)
-			ptrMove=0;		 
-		}	
-	 //
-		
-		//从静音进入非静音先使用小火
-		big_small_flag=0;
-	}
-	//
-
-	//非静音
-	else 
-	{
-		
-		//慢节奏
-		if(volume.current<volume.average )
-		{
-			
-			//切换到小火
-			big_small_flag=0;
-			
-			music_speed_max=15;
-							
-		}
-		
-		else if(volume.current==volume.average )
-		{
-			
-			//切换到小火
-			big_small_flag=0;
-			
-			music_speed_max=10;
-		}
-		//
-		
-		//快节奏
-		else
-		{
-			
-			//切换到大火
-			big_small_flag=1;
-			
-			music_speed_max=5;
-		}
-		//
-			
-		//速度控制
-		if(++music_speed_count>=music_speed_max)
-		{
-		 
-			music_speed_count=0;
-
-			//小火
-			if(big_small_flag==0)
-			{
-
-				for(i=0;i<6;i++)
-				{
-				 for(j=0;j<10;j++)
-					Fire_Data[i][j]=Small_Fire_tab_array[small_index][i][j];
-				}
-				//
-				
-				//下一帧
-				if(++small_index>=SMALL_FRAME_END)
-				{
-				 small_index=0; 
-					
-				}
-			}
-			//
-			
-			//大火
-			else
-			{
-
-				for(i=0;i<6;i++)
-				{
-				 for(j=0;j<10;j++)
-					Fire_Data[i][j]=Big_Fire_tab_array[big_index][i][j];
-				}
-				//
-				
-				//下一帧
-				if(++big_index>=H_BIG_FRAME_END)
-				{
-				 big_index=0; 
-					
-					
-				}
-			}
-			//
-		}
-		//
-//  for(i=0;i<6;i++)
-//  {
-//   for(j=0;j<10;j++)
-//  	Fire_Data[i][j]=Music_Fire_tab[index][i][j];
-//  }
-
-//  if(++index>=120)
-//   index=0; 
-	}
+ uint8_t x,j;	
+ static uint8_t cntWrite;	
+ if(FireMode_c!=FireMode)
+ {
+  cntWrite=0;
+  cntMusic_none=100;	 
+  FireMode_c=FireMode;
+  for(x=0;x<10;x++)	
+  {
+   for(j=0;j<6;j++)
+   {
+	Fire_Data_H[j][x]=0;   
+	mMusic_Map_Tab[j][x]=0;    
+	sMusic_Map_Tab[j][x]=0;  
+	Fire_Data_H_temp[j][x]=0;  
+   }
+  }	 
+ }	 
+ MusicMode_AudioDeal();	
+ for(x=0;x<10;x++)	
+ {
+  for(j=0;j<6;j++)
+  {
+    if(Fire_Data_H_temp[j][x]<sMusic_Map_Tab[j][x])  
+     Fire_Data_H_temp[j][x]++;
+    if(Fire_Data_H_temp[j][x]>sMusic_Map_Tab[j][x])  
+     Fire_Data_H_temp[j][x]--;		
+    if(Fire_Data_H_temp[j][x]>=31)	
+     Fire_Data_H_temp[j][x]=31;	
+  }
+ }	
+ if(++cntWrite>5)
+ {
+  cntWrite=0;	 
+  for(x=0;x<10;x++)	
+  {
+   for(j=0;j<6;j++)
+   {
+    Fire_Data_H[j][x]=Fire_Data_H_temp[j][x];
+   }
+  }
+ }
+ if(cntMusic_none>=100) 
+ {
+  s_Music_Fire_Mode();
+  LoadData_to_MC96F_V();	 
+ }
+ else
+ {
+  LoadData_to_MC96F_H();	 
+ }	 
 }
+
+uint8_t const Music_Fire_tab_array[12][12][5] = 
+{
+{                  
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x02,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x02,  0x02,  0x00,
+  0x00,  0x04,  0x00,  0x00,  0x00,
+0x00,  0x08,  0x06,  0x06,  0x00,  
+  0x00,  0x0A,  0x07,  0x08,  0x00,
+0x00,  0x04,  0x08,  0x08,  0x00,  
+},
+{
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x02,  0x00,  0x00,
+  0x00,  0x02,  0x02,  0x00,  0x00,
+0x00,  0x02,  0x02,  0x02,  0x00,
+  0x00,  0x02,  0x03,  0x00,  0x00,
+0x00,  0x06,  0x06,  0x04,  0x00,  
+  0x00,  0x05,  0x06,  0x06,  0x00,
+0x00,  0x07,  0x05,  0x08,  0x00, 
+},
+{
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x02,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x02,  0x00,  0x00,
+0x00,  0x02,  0x02,  0x02,  0x00,
+  0x00,  0x03,  0x02,  0x00,  0x00,
+0x00,  0x04,  0x07,  0x05,  0x00,  
+  0x00,  0x07,  0x08,  0x07,  0x00,
+0x00,  0x04,  0x08,  0x06,  0x00,  
+},
+{
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x02,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x02,  0x02,  0x02,  0x00,
+  0x00,  0x04,  0x02,  0x00,  0x00,
+0x00,  0x08,  0x05,  0x08,  0x00,  
+  0x00,  0x08,  0x06,  0x06,  0x00,
+0x00,  0x09,  0x07,  0x08,  0x00,  
+},
+{
+  0x00,  0x00,  0x02,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x02,  0x00,
+0x00,  0x02,  0x02,  0x02,  0x00,
+  0x00,  0x02,  0x02,  0x02,  0x00,
+0x00,  0x04,  0x06,  0x05,  0x00,  
+  0x00,  0x06,  0x07,  0x06,  0x00,
+0x00,  0x08,  0x08,  0x08,  0x00,  
+},
+{
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x02,  0x00,  0x00,
+  0x00,  0x02,  0x04,  0x02,  0x00,
+0x00,  0x06,  0x06,  0x05,  0x00,  
+  0x00,  0x06,  0x08,  0x06,  0x00,
+0x00,  0x09,  0x07,  0x09,  0x00,  
+},	
+{                  
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x03,  0x00,  0x00,
+  0x00,  0x00,  0x04,  0x00,  0x00,
+0x00,  0x02,  0x02,  0x00,  0x00,
+  0x00,  0x02,  0x06,  0x00,  0x00,
+0x00,  0x06,  0x06,  0x06,  0x00,  
+  0x00,  0x08,  0x07,  0x08,  0x00,
+0x00,  0x04,  0x09,  0x08,  0x00,  
+},
+{
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x02,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x02,  0x00,  0x00,
+  0x00,  0x04,  0x02,  0x02,  0x00,
+0x00,  0x07,  0x04,  0x04,  0x00,  
+  0x00,  0x05,  0x08,  0x06,  0x00,
+0x00,  0x07,  0x05,  0x08,  0x00, 
+},
+{
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x01,  0x00,  0x00,  0x00,
+0x00,  0x02,  0x00,  0x00,  0x00,
+  0x00,  0x02,  0x00,  0x00,  0x00,
+0x00,  0x02,  0x02,  0x00,  0x00,
+  0x00,  0x03,  0x03,  0x00,  0x00,
+0x00,  0x04,  0x06,  0x05,  0x00,  
+  0x00,  0x07,  0x07,  0x07,  0x00,
+0x00,  0x04,  0x08,  0x06,  0x00,  
+},
+{
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x01,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x02,  0x00,  0x00,
+0x00,  0x02,  0x02,  0x02,  0x00,
+  0x00,  0x02,  0x03,  0x00,  0x00,
+0x00,  0x08,  0x06,  0x04,  0x00,  
+  0x00,  0x06,  0x06,  0x06,  0x00,
+0x00,  0x09,  0x07,  0x06,  0x00,  
+},
+{
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x02,  0x00,
+  0x00,  0x00,  0x02,  0x00,  0x00,
+0x00,  0x00,  0x02,  0x00,  0x00,
+  0x00,  0x02,  0x03,  0x02,  0x00,
+0x00,  0x06,  0x06,  0x04,  0x00,  
+  0x00,  0x06,  0x07,  0x06,  0x00,
+0x00,  0x08,  0x08,  0x08,  0x00,  
+},
+{
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x00,  0x00,  0x00,
+  0x00,  0x00,  0x00,  0x00,  0x00,
+0x00,  0x00,  0x02,  0x00,  0x00,
+  0x00,  0x02,  0x02,  0x02,  0x00,
+0x00,  0x05,  0x05,  0x05,  0x00,  
+  0x00,  0x06,  0x08,  0x06,  0x00,
+0x00,  0x09,  0x07,  0x07,  0x00,  
+},
+};	
+
 /*******************************************************************************************/
 /*******************************************************************************************/ 
+uint8_t mMusic_Mirror;	 
+uint8_t mMusic_speed_cnt;
+uint8_t mMusic_index_run;
+void s_Music_Fire_Mode(void)
+{
+ uint8_t i,j;//,k;	
+ //static uint8_t flash_f;
+ if(++mMusic_speed_cnt>12)
+ {		
+  mMusic_speed_cnt=0;
+  if(++mMusic_index_run>=12)
+  {
+   mMusic_index_run=0; 
+   mMusic_Mirror=~mMusic_Mirror;	  
+  }
+  for(i=0;i<12;i++)
+  {
+    for(j=0;j<5;j++)
+	{
+     Fire_Data_V[i][j]=0;		 
+    } 
+    for(j=1;j<4;j++)
+	{
+	 if(mMusic_Mirror)	
+      Fire_Data_V[i][j]=Music_Fire_tab_array[mMusic_index_run][i][j]/2;	 
+	 else
+      Fire_Data_V[i][j]=Music_Fire_tab_array[mMusic_index_run][i][4-j]/2;	 		 
+    }   
+  }
+//  flash_f=~flash_f;
+//  if(flash_f)
+//  {
+//   for(k=0;k<1;k++) 
+//   {
+//    for(i=0;i<12;i++)
+//    {
+//     for(j=0;j<5;j++)
+//     { 
+//      if(Fire_Data_V_sub[i][j])	 
+//       Fire_Data_V_sub[i][j]--;   
+//     }   
+//    } 
+//   }  
+//  }  
+ }
 
-
+// for(k=0;k<1;k++) 
+// {
+//  for(i=0;i<12;i++)
+//  {
+//   for(j=0;j<5;j++)
+//   {
+//    if(Fire_Data_V[i][j]<Fire_Data_V_sub[i][j])
+//     Fire_Data_V[i][j]++;  
+//    if(Fire_Data_V[i][j]>Fire_Data_V_sub[i][j])	 
+//     Fire_Data_V[i][j]--;   
+//   }   
+//  } 
+// } 
+}
