@@ -40,12 +40,12 @@ extern UART_HandleTypeDef huart1;
 typedef enum
 {
 	FIRE_OFF   =0,
-	FIRE_SMALL   ,
-	FIRE_MIDDLE  ,
-	FIRE_BIG     ,
-	FIRE_WIND  	 ,
-	FIRE_MUSIC   ,	
-	FIRE_LEVEL   ,
+	FIRE_SMALL   ,//小火
+	FIRE_MIDDLE  ,//中火
+	FIRE_BIG     ,//大火
+	FIRE_WIND  	 ,//随风摆动形态
+	FIRE_MUSIC   ,//火焰随音乐
+	FIRE_LEVEL   ,//像音乐频谱
 }FIRE_MODE;
 #define FIRE_MODE_MAX  FIRE_LEVEL
 
@@ -73,6 +73,7 @@ extern FIRE_MODE FireMode_c;
 extern void app_main(void);
 
 #endif
+
 
 
 

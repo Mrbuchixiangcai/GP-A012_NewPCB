@@ -18,6 +18,7 @@
 "gp-a012\stm32f0xx_hal_adc_ex.o"
 "gp-a012\stm32f0xx_hal_pwr_ex.o"
 "gp-a012\stm32f0xx_hal_gpio.o"
+"gp-a012\stm32f0xx_hal_wwdg.o"
 "gp-a012\app_main.o"
 "gp-a012\bt_mode.o"
 "gp-a012\h_adc.o"
